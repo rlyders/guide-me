@@ -1,0 +1,28 @@
+title: Customer feedback
+who:
+    question: Do you want to report this with us (internally), the Better Business Bureau, or Santa Claus?
+    choices:
+        Us: how
+        BBB: bbb-info
+        Santa Claus: santa-info
+    learnMore: https://www.google.com/search?q=customer+complaint
+how: 
+    question: Do you want to use your mobile phone or your computer?
+    choices:
+        Mobile phone: mobile-phone
+        Computer: browser-how-to
+mobile-phone:
+    question: Are you using the mobile app or the web browser on the mobile phone? 
+    choices:
+        Mobile App: mobile-app-how-to
+        Mobile Web Browser: browser-how-to
+        Other: other-info
+    learnMore: https://www.google.com/search?q=app+learn+more
+mobile-app-how-to: |
+    ### Heading
+    * Bullets
+    * Points
+bbb-info: https://www.bbb.org/file-a-complaint
+santa-info: https://www.google.com/search?q=santa+info
+browser-how-to: https://www.google.com/search?q=browser+how+to
+other-info: https://www.google.com/search?q=other+info

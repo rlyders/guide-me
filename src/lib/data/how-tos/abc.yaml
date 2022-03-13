@@ -1,0 +1,20 @@
+title: question-answer
+prompt1:
+    question: Question#1?
+    choices:
+        prompt1Choice1: prompt2
+        prompt1Choice2: prompt3
+prompt2:
+    question: Question#2?
+    choices:
+        prompt2Choice1: link1
+        prompt2Choice2: link2
+prompt3:
+    question: Question#3?
+    choices:
+        prompt3Choice1: link3
+        prompt3Choice2: link4
+link1: https://link1
+link2: https://link2
+link3: https://link3
+link4: https://link4
