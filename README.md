@@ -23,9 +23,10 @@ cd guide-me
 npm install
 ```
 
-...then start:
+...then prepare styles, build, and start:
 
 ```bash
+npm run prepare
 npm run dev
 ```
 
