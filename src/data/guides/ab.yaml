@@ -1,8 +1,0 @@
-title: ab
-a:
-    question: A?
-    choices:
-        - b: b
-        - c: c
-b: https://b
-c: https://c
