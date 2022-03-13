@@ -13,7 +13,7 @@
 
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { decisionTreeData } from "./decisionTreeDataStore.js";
+	import { guideData } from "./guideDataStore.js";
 
 	import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
 	import IconButton from "@smui/icon-button";
@@ -26,7 +26,7 @@
 	import { fade, fly } from "svelte/transition";
 	import { version } from "./version";
 
-	let title = "Decision-Tree";
+	let title = "Guide-Me";
 
 	let menu: MenuComponentDev;
 
@@ -39,8 +39,8 @@
 	let howToVisible = true;
 
 	function init(howToTitle) {
-		currentHowToIdx = $decisionTreeData.findIndex((h) => h.title === howToTitle);
-		startingStepKey = Object.keys($decisionTreeData[currentHowToIdx]).find(
+		currentHowToIdx = $guideData.findIndex((h) => h.title === howToTitle);
+		startingStepKey = Object.keys($guideData[currentHowToIdx]).find(
 			(k) => k !== "title"
 		);
 	}
@@ -51,17 +51,17 @@
 			() => {
 				init(howToTitle);
 				howToVisible = true;
-			}, // FIXME a delay >=500ms is required here otherwise the How-To guide never actually changes
+			}, // FIXME a delay >=500ms is required here otherwise the guide never actually changes
 			500
 		);
 	};
 
 	onMount(async () => {
-		if ($decisionTreeData && currentHowToIdx && $decisionTreeData[currentHowToIdx]) {
-			console.log("$decisionTreeData="+$decisionTreeData);
+		if ($guideData && currentHowToIdx && $guideData[currentHowToIdx]) {
+			console.log("$guideData="+$guideData);
 			console.log("currentHowToIdx="+currentHowToIdx);
-			console.log("$decisionTreeData[currentHowToIdx]="+$decisionTreeData[currentHowToIdx]);
-			init($decisionTreeData[currentHowToIdx].title);
+			console.log("$guideData[currentHowToIdx]="+$guideData[currentHowToIdx]);
+			init($guideData[currentHowToIdx].title);
 		}
 	});
 
@@ -83,8 +83,8 @@
 					>
 					<Menu bind:this={menu}>
 						<List>
-							{#if $decisionTreeData}
-								{#each $decisionTreeData as howToInList, i}
+							{#if $guideData}
+								{#each $guideData as howToInList, i}
 									<Item
 										on:SMUI:action={() =>
 											useHowTo(howToInList.title)}
@@ -97,7 +97,7 @@
 					</Menu>
 
 					<Title
-						>{title} <span style="font-size:80%">v{version}</span>: {$decisionTreeData ? $decisionTreeData[currentHowToIdx].title : "Loading..."}</Title
+						>{title} <span style="font-size:80%">v{version}</span>: {$guideData ? $guideData[currentHowToIdx].title : "Loading..."}</Title
 					>
 				</Section>
 				<Section align="end" toolbar>
@@ -129,10 +129,10 @@
 					<Label slot="label">Loading...</Label>
 				</Banner>
 			{/if}
-			{#if $decisionTreeData && howToVisible}
+			{#if $guideData && howToVisible}
 				<div in:fly={{ y: 200, duration: 750 }} out:fade>
 					<HowTo
-						howToData={$decisionTreeData[currentHowToIdx]}
+						howToData={$guideData[currentHowToIdx]}
 						{startingStepKey}
 					/>
 				</div>
