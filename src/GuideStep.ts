@@ -5,7 +5,7 @@ export class Choice {
    url: URL | undefined;
 }
 
-export class HowToStep {
+export class GuideStep {
    public stepKey: string;
    public question: string;
    public choices: Choice[];

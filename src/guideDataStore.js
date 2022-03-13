@@ -1,8 +1,8 @@
 import { readable } from 'svelte/store';
-import customerFeedbackHowToData from "./data/guides/customer-feedback.yaml";
-import turnOnLightsHowToData from './data/guides/turn-on-lights.yaml';
+import customerFeedbackGuideData from "./data/guides/customer-feedback.yaml";
+import turnOnLightsGuideData from './data/guides/turn-on-lights.yaml';
 
 export const guideData = readable(undefined, (set) => {
-    set([customerFeedbackHowToData, turnOnLightsHowToData]);
+    set([customerFeedbackGuideData, turnOnLightsGuideData]);
     return () => {console.log('guideData.stop');}
 })

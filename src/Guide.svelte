@@ -20,18 +20,18 @@
     import { Label } from '@smui/common';
     import List, { Item, Text, PrimaryText, SecondaryText } from '@smui/list';
 
-    export let howToData;
+    export let guideData;
     export let startingStepKey;
 
     let startingUserChoice = new UserChoice({path: `/${startingStepKey}`, stepKey: startingStepKey});
     let currentUserChoiceIdx = 0;
     let userChoices: UserChoice[] = [startingUserChoice];
     let currentUserChoice: UserChoice;
-    let currentHowToStep;
+    let currentGuideStep;
     let selected;
 
     $: currentUserChoice = userChoices[currentUserChoiceIdx];
-    $: currentHowToStep = currentUserChoice && currentUserChoice.stepKey ? howToData[currentUserChoice.stepKey] : undefined;
+    $: currentGuideStep = currentUserChoice && currentUserChoice.stepKey ? guideData[currentUserChoice.stepKey] : undefined;
     
     let htmlContent = '';
     let visibleCard = true;
@@ -45,11 +45,11 @@
             if (choiceKey !== userChoice.selectedChoiceKey) {
                 userChoices.length = currentUserChoiceIdx+1;
                 userChoice.selectedChoiceKey=choiceKey;
-                userChoice.selectedChoiceValue=howToData[userChoice.stepKey].choices[choiceKey];
+                userChoice.selectedChoiceValue=guideData[userChoice.stepKey].choices[choiceKey];
 
                 if (currentUserChoiceIdx+1 >= userChoices.length) {
                     let newUserChoice;
-                    if (howToData.hasOwnProperty(userChoice.selectedChoiceValue)) {
+                    if (guideData.hasOwnProperty(userChoice.selectedChoiceValue)) {
                         newUserChoice = new UserChoice({
                             path: `${currentUserChoice.path}/${userChoice.selectedChoiceValue}`, 
                             stepKey: userChoice.selectedChoiceValue
@@ -123,7 +123,7 @@
 
 </script>
 
-{#if currentHowToStep }
+{#if currentGuideStep }
     <ul class="breadcrumb">
         {#each userChoices as userChoice,userChoiceIdx}
             {#if userChoiceIdx <= currentUserChoiceIdx}
@@ -147,17 +147,17 @@
                             <div class="mdc-typography--body1">Guide:</div>
                         </div>
                         <div style="flex-grow: 1; font-size: 24px; background-color: #F3F5F6; margin: 10px; padding: 25px 20px;" class="mdc-typography--body1">
-                            {#if (typeof currentHowToStep == 'string' || currentHowToStep instanceof String) && isValidHttpUrl(currentHowToStep)}
-                                <a href={currentHowToStep} target="_tab">{currentHowToStep}</a>
+                            {#if (typeof currentGuideStep == 'string' || currentGuideStep instanceof String) && isValidHttpUrl(currentGuideStep)}
+                                <a href={currentGuideStep} target="_tab">{currentGuideStep}</a>
                             {:else}
-                                {currentHowToStep.question ? currentHowToStep.question : currentHowToStep}
+                                {currentGuideStep.question ? currentGuideStep.question : currentGuideStep}
                             {/if}
                             <Actions>
-                                {#if currentHowToStep.choices}
+                                {#if currentGuideStep.choices}
                                     <div class="segmented-button-group">
                                         <div>
                                         <SegmentedButton
-                                            segments={Object.keys(currentHowToStep.choices)} 
+                                            segments={Object.keys(currentGuideStep.choices)} 
                                             let:segment singleSelect 
                                             bind:selected>
                                             <Segment {segment}
@@ -172,9 +172,9 @@
                             </Actions>                
                         </div>
                     </div>
-                    {#if currentHowToStep.learnMore}                      
+                    {#if currentGuideStep.learnMore}                      
                         <div class="learn-more">
-                            <Button text class="primary-text" on:click={() => {window.open(currentHowToStep.learnMore, "_tab")}}>Learn More</Button>
+                            <Button text class="primary-text" on:click={() => {window.open(currentGuideStep.learnMore, "_tab")}}>Learn More</Button>
                         </div>
                     {/if}
                 </Content>
@@ -187,13 +187,13 @@
     <div>currentUserChoiceIdx={currentUserChoiceIdx}</div>
     <div>userChoices[currentUserChoiceIdx]={JSON.stringify(userChoices[currentUserChoiceIdx], null, 2)}</div>
     <div>userChoices[currentUserChoiceIdx].stepKey={JSON.stringify(userChoices[currentUserChoiceIdx].stepKey, null, 2)}</div>
-    <div>howToData[userChoices[currentUserChoiceIdx].stepKey]={JSON.stringify(howToData[userChoices[currentUserChoiceIdx].stepKey], null, 2)}</div>
+    <div>guideData[userChoices[currentUserChoiceIdx].stepKey]={JSON.stringify(guideData[userChoices[currentUserChoiceIdx].stepKey], null, 2)}</div>
     <div>startingUserChoice={JSON.stringify(startingUserChoice, null, 2)}</div>
     <div>userChoices={JSON.stringify(userChoices, null, 2)}</div>
     <div>currentUserChoice={JSON.stringify(currentUserChoice, null, 2)}</div>
-    <div>currentHowToStep={JSON.stringify(currentHowToStep, null, 2)}</div>
+    <div>currentGuideStep={JSON.stringify(currentGuideStep, null, 2)}</div>
     <div>currentUserChoice.stepKey={JSON.stringify(currentUserChoice ? currentUserChoice.stepKey : undefined, null, 2)}</div>
-    <div>howToData[currentUserChoice.stepKey]={JSON.stringify(currentUserChoice && currentUserChoice.stepKey ? howToData[currentUserChoice.stepKey] : undefined, null, 2)}</div>
+    <div>guideData[currentUserChoice.stepKey]={JSON.stringify(currentUserChoice && currentUserChoice.stepKey ? guideData[currentUserChoice.stepKey] : undefined, null, 2)}</div>
     <div>selected={selected}</div>
 </code> -->
 

@@ -22,7 +22,7 @@
 	import Menu, { MenuComponentDev } from "@smui/menu";
 	import List, { Item, Text } from "@smui/list";
 
-	import HowTo from "./HowTo.svelte";
+	import Guide from "./Guide.svelte";
 	import { fade, fly } from "svelte/transition";
 	import { version } from "./version";
 
@@ -34,34 +34,34 @@
 	let dense = false;
 	let secondaryColor = false;
 
-	let currentHowToIdx = 0;
+	let currentGuideIdx = 0;
 	let startingStepKey = "which";
-	let howToVisible = true;
+	let guideVisible = true;
 
-	function init(howToTitle) {
-		currentHowToIdx = $guideData.findIndex((h) => h.title === howToTitle);
-		startingStepKey = Object.keys($guideData[currentHowToIdx]).find(
+	function init(guideTitle) {
+		currentGuideIdx = $guideData.findIndex((h) => h.title === guideTitle);
+		startingStepKey = Object.keys($guideData[currentGuideIdx]).find(
 			(k) => k !== "title"
 		);
 	}
 
-	const useHowTo = (howToTitle) => {
-		howToVisible = false;
+	const useGuide = (guideTitle) => {
+		guideVisible = false;
 		setTimeout(
 			() => {
-				init(howToTitle);
-				howToVisible = true;
+				init(guideTitle);
+				guideVisible = true;
 			}, // FIXME a delay >=500ms is required here otherwise the guide never actually changes
 			500
 		);
 	};
 
 	onMount(async () => {
-		if ($guideData && currentHowToIdx && $guideData[currentHowToIdx]) {
+		if ($guideData && currentGuideIdx && $guideData[currentGuideIdx]) {
 			console.log("$guideData="+$guideData);
-			console.log("currentHowToIdx="+currentHowToIdx);
-			console.log("$guideData[currentHowToIdx]="+$guideData[currentHowToIdx]);
-			init($guideData[currentHowToIdx].title);
+			console.log("currentGuideIdx="+currentGuideIdx);
+			console.log("$guideData[currentGuideIdx]="+$guideData[currentGuideIdx]);
+			init($guideData[currentGuideIdx].title);
 		}
 	});
 
@@ -84,12 +84,12 @@
 					<Menu bind:this={menu}>
 						<List>
 							{#if $guideData}
-								{#each $guideData as howToInList, i}
+								{#each $guideData as guideInList, i}
 									<Item
 										on:SMUI:action={() =>
-											useHowTo(howToInList.title)}
+											useGuide(guideInList.title)}
 									>
-										<Text>{howToInList.title}</Text>
+										<Text>{guideInList.title}</Text>
 									</Item>
 								{/each}
 							{/if}
@@ -97,7 +97,7 @@
 					</Menu>
 
 					<Title
-						>{title} <span style="font-size:80%">v{version}</span>: {$guideData ? $guideData[currentHowToIdx].title : "Loading..."}</Title
+						>{title} <span style="font-size:80%">v{version}</span>: {$guideData ? $guideData[currentGuideIdx].title : "Loading..."}</Title
 					>
 				</Section>
 				<Section align="end" toolbar>
@@ -116,10 +116,10 @@
 			</Row>
 		</TopAppBar>
 		<div class="flexor-content">
-			<!-- This `{#if !howToVisible}` for the <Banner> must be before *and in a separate if/then*
-          from the `{#if howToVisible}` for the <HowTo> so that the Banner doesn't move around when
-          the <HowTo> fades away -->
-			{#if !howToVisible}
+			<!-- This `{#if !guideVisible}` for the <Banner> must be before *and in a separate if/then*
+          from the `{#if guideVisible}` for the <Guide> so that the Banner doesn't move around when
+          the <Guide> fades away -->
+			{#if !guideVisible}
 				<Banner
 					open
 					fixed
@@ -129,10 +129,10 @@
 					<Label slot="label">Loading...</Label>
 				</Banner>
 			{/if}
-			{#if $guideData && howToVisible}
+			{#if $guideData && guideVisible}
 				<div in:fly={{ y: 200, duration: 750 }} out:fade>
-					<HowTo
-						howToData={$guideData[currentHowToIdx]}
+					<Guide
+						guideData={$guideData[currentGuideIdx]}
 						{startingStepKey}
 					/>
 				</div>

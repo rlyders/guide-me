@@ -1,5 +1,5 @@
 # Guide-Me web app
-I created this [Svelte](https://svelte.dev/) `Guide-Me` web app of just an initial 111 lines of code across two Svelte files ([App.svelte](src\App.svelte) and [HowTo.svelte](src\HowTo.svelte)) for fun as a prototype just to see how such a `Guide-Me` web app might be implemented. I went through various revisions until I finally landed upon this latest version. At first, I worked towards a live and dynamic UI of a flow-chart and decision tree with live connecting lines between draggable UI elements that the user would follow as they clicked on various choices. That flow-chart UI was visually interesting, but somewhat distracting and clunky. The current UI I designed in this web app is more user-friendly and easy to naturally traverse both forwards and in reverse. This current UI allows the user to easily go back to previous questions to change a prior choice.
+I created this [Svelte](https://svelte.dev/) `Guide-Me` web app of just an initial 111 lines of code across two Svelte files ([App.svelte](src\App.svelte) and [Guide.svelte](src\Guide.svelte)) for fun as a prototype just to see how such a `Guide-Me` web app might be implemented. I went through various revisions until I finally landed upon this latest version. At first, I worked towards a live and dynamic UI of a flow-chart and decision tree with live connecting lines between draggable UI elements that the user would follow as they clicked on various choices. That flow-chart UI was visually interesting, but somewhat distracting and clunky. The current UI I designed in this web app is more user-friendly and easy to naturally traverse both forwards and in reverse. This current UI allows the user to easily go back to previous questions to change a prior choice.
 
 * [Live demo app hosted via GitHub](https://rlyders.github.io/guide-me)
 * [Live demo app hosted via Vercel](https://guide-me-mu.vercel.app)
@@ -66,13 +66,12 @@ Be sure to check out the samples in `public/guides` to get familiar with the YAM
             * a key to another guide step. If the choice value is a key to another guide step then the guide continues with that step when the user selects the choice.
 
 ## Add your own Guide-Me 
- * Create new `yaml` file in `./public/guides`
- * Import new `yaml` file into `main.ts` such as:
-    `import myHowTo from '../public/guides/my-guide.yaml';`
+ * Create new `yaml` file in `./src/data/guides`
+ * Import new `yaml` file into `/src/guideDataStore.js` such as:
+    `import myGuide from './data/guides/my-guide.yaml';`
  * Add your new imported object as the first item in the array of Guides:
-    `let howTos = [myHowTo, customerFeedbackHowToData, turnOnLightsHowToData];`
+    `set([myGuide, customerFeedbackGuideData, turnOnLightsGuideData]);`
  * Run the app to see your new guide
- * TODO: update the AppBar to allow the user to select the current Guide-Me from the list of available Guides
 
 ## Building and running in production mode
 
