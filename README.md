@@ -65,7 +65,7 @@ Be sure to check out the samples in `public/guides` to get familiar with the YAM
                 * TODO: this could be enhanced in the future to display the live contents of the web page as opposed to just showing the URI. 
             * a key to another guide step. If the choice value is a key to another guide step then the guide continues with that step when the user selects the choice.
 
-## Add your own Guide-Me 
+## Add your own guide
  * Create new `yaml` file in `./src/data/guides`
  * Import new `yaml` file into `/src/guideDataStore.js` such as:
     `import myGuide from './data/guides/my-guide.yaml';`
@@ -75,7 +75,7 @@ Be sure to check out the samples in `public/guides` to get familiar with the YAM
 
 ## Building and running in production mode
 
-To create an optimised version of the app:
+To create an optimized version of the app:
 
 ```bash
 npm run build
