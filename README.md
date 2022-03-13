@@ -2,7 +2,6 @@
 I created this [Svelte](https://svelte.dev/) `Guide-Me` web app of just an initial 111 lines of code across two Svelte files ([App.svelte](src\App.svelte) and [Guide.svelte](src\Guide.svelte)) for fun as a prototype just to see how such a `Guide-Me` web app might be implemented. I went through various revisions until I finally landed upon this latest version. At first, I worked towards a live and dynamic UI of a flow-chart and decision tree with live connecting lines between draggable UI elements that the user would follow as they clicked on various choices. That flow-chart UI was visually interesting, but somewhat distracting and clunky. The current UI I designed in this web app is more user-friendly and easy to naturally traverse both forwards and in reverse. This current UI allows the user to easily go back to previous questions to change a prior choice.
 
 * [Live demo app hosted via GitHub](https://rlyders.github.io/guide-me)
-* [Live demo app hosted via Vercel](https://guide-me-mu.vercel.app)
 
 One of my key design goals of this app was to allow this app to handle a wide variety of Guides without having to embed any business rules in the app code itself. I came up with a simple YAML file format that acts as the definition of each guide. Currently, the guide YAML definition files are a static collection of files manually created and stored in the `src/data/guides` folder of this project.
 
@@ -82,35 +81,3 @@ npm run build
 ```
 
 You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
-
-## Deploying to the web
-
-### With [Vercel](https://vercel.com)
-
-Install `vercel` if you haven't already:
-
-```bash
-npm install -g vercel
-```
-
-Then, from within your project folder:
-
-```bash
-cd public
-vercel deploy --name guide-me
-```
-
-### With [surge](https://surge.sh/)
-
-Install `surge` if you haven't already:
-
-```bash
-npm install -g surge
-```
-
-Then, from within your project folder:
-
-```bash
-npm run build
-surge public guide-me.surge.sh
-```
