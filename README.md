@@ -83,3 +83,11 @@ npm run build
 ```
 
 You can run the newly built app with `npm run start`. This uses [sirv](https://github.com/lukeed/sirv), which is included in your package.json's `dependencies` so that the app will work when you deploy to platforms like [Heroku](https://heroku.com).
+
+## Deploy
+
+### Deploy to GitHub pages
+ `npm run deploy`
+
+### Deploy to AWS S3
+Upload contents of this project's `./public` directory to `https://s3.console.aws.amazon.com/s3/buckets/guide-me?region=us-east-1&tab=objects`
