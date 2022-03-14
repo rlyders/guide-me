@@ -27,6 +27,8 @@
     let currentUserChoiceIdx = 0;
     let userChoices: UserChoice[] = [startingUserChoice];
     let currentUserChoice: UserChoice;
+    let sendVia;
+    let sendViaChoice;
     let currentGuideStep;
     let selected;
 
@@ -154,8 +156,8 @@
                                     {currentGuideStep.question ? currentGuideStep.question : currentGuideStep}
                                 </div>
                             {/if}
-                            <Actions>
-                                {#if currentGuideStep.choices}
+                            {#if currentGuideStep.choices}
+                                <Actions>
                                     <div class="segmented-button-group">
                                         <div>
                                         <SegmentedButton
@@ -170,14 +172,29 @@
                                         </SegmentedButton>             
                                         </div>
                                     </div>                 
-                                {/if}
-                            </Actions>                
+                                </Actions>                
+                            {/if}
                         </div>
                     </div>
                     {#if currentGuideStep.learnMore}                      
                         <div class="learn-more">
                             <Button text class="primary-text" on:click={() => {window.open(currentGuideStep.learnMore, "_tab")}}>Learn More</Button>
                         </div>
+                    {/if}
+                    {#if !currentGuideStep.choices}
+                        <div class="segmented-button-group send-via-group">
+                            <div style="margin-top: 1em;">Send via:</div>
+                            <SegmentedButton
+                                segments={["US mail","phone","fax","email","text message","telegraph","smoke signals","telepathy"]}
+                                let:segment singleSelect 
+                                bind:selected={sendVia}>
+                                <Segment {segment}
+                                    on:click={() => handleClickChoice(sendViaChoice, segment)} 
+                                    style="flex: 1;">
+                                    <Label>{segment}</Label>
+                                </Segment>
+                            </SegmentedButton>                                                         
+                        </div>                 
                     {/if}
                 </Content>
             </Card>
@@ -225,5 +242,9 @@
 
     .guide-prompt {
         white-space: pre-wrap;
+    }
+
+    .send-via-group {
+        padding: 20px;
     }
 </style>
