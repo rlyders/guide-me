@@ -150,7 +150,9 @@
                             {#if (typeof currentGuideStep == 'string' || currentGuideStep instanceof String) && isValidHttpUrl(currentGuideStep)}
                                 <a href={currentGuideStep} target="_tab">{currentGuideStep}</a>
                             {:else}
-                                {currentGuideStep.question ? currentGuideStep.question : currentGuideStep}
+                                <div class="guide-prompt">
+                                    {currentGuideStep.question ? currentGuideStep.question : currentGuideStep}
+                                </div>
                             {/if}
                             <Actions>
                                 {#if currentGuideStep.choices}
@@ -221,4 +223,7 @@
         padding: 10px 0px;
     }
 
+    .guide-prompt {
+        white-space: pre-wrap;
+    }
 </style>
