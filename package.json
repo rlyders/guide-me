@@ -1,13 +1,15 @@
 {
-  "name": "svelte-app",
-  "version": "1.0.0",
+  "name": "Guide-Me",
+  "version": "1.2.3",
   "private": true,
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
+    "build": "npm run version && rollup -c",
+    "dev": "npm run version && rollup -c -w",
     "start": "sirv public --no-clear",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "prepare": "smui-theme compile build/smui.css -i src/theme"
+    "prepare": "smui-theme compile build/smui.css -i src/theme",
+    "version": "npx genversion --es6 src/lib/version.js",
+    "deploy": "node ./gh-pages.js"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -24,6 +26,7 @@
     "@smui/segmented-button": "^6.0.0-beta.15",
     "@smui/top-app-bar": "^6.0.0-beta.15",
     "@tsconfig/svelte": "^2.0.0",
+    "genversion": "^3.0.2",
     "rollup": "^2.3.4",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",

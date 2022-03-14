@@ -24,7 +24,7 @@
 
 	import Guide from "./Guide.svelte";
 	import { fade, fly } from "svelte/transition";
-	import { version } from "./version";
+	import { version } from "./lib/version";
 
 	let title = "Guide-Me";
 
