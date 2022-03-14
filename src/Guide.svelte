@@ -16,9 +16,12 @@
     import Card, { Content, Actions } from '@smui/card';
     import Button from '@smui/button';
     import { UserChoice } from './UserChoice';
+    import IconButton from '@smui/icon-button';
     import SegmentedButton, { Segment } from '@smui/segmented-button';
     import { Label } from '@smui/common';
     import List, { Item, Text, PrimaryText, SecondaryText } from '@smui/list';
+    import type { SnackbarComponentDev } from '@smui/snackbar';
+    import Snackbar from '@smui/snackbar';
 
     export let guideData;
     export let startingStepKey;
@@ -123,6 +126,17 @@
     }
     // breadcrumb label:(nextStepKey.length <= 20) ? nextStepKey : nextStepKey.substr(0, 9) + "..." + nextStepKey.substr(nextStepKey.length-10);
 
+    let snackbar: SnackbarComponentDev;
+    let reason = 'nothing yet';
+ 
+  function handleClosed(e: CustomEvent<{ reason: string | undefined }>) {
+    reason = e.detail.reason ?? 'Undefined.';
+  }
+  
+  function sendInfoVia(info, via) {
+    sendViaChoice = via;
+    snackbar.open()
+  }
 </script>
 
 {#if currentGuideStep }
@@ -189,7 +203,7 @@
                                 let:segment singleSelect 
                                 bind:selected={sendVia}>
                                 <Segment {segment}
-                                    on:click={() => handleClickChoice(sendViaChoice, segment)} 
+                                    on:click={() => sendInfoVia("info", segment)}
                                     style="flex: 1;">
                                     <Label>{segment}</Label>
                                 </Segment>
@@ -202,6 +216,13 @@
     {/if}
 {/if}
 
+<Snackbar bind:this={snackbar} labelText="Info sent via {sendViaChoice}">
+    <Label />
+    <Actions>
+      <IconButton class="material-icons" title="Dismiss">close</IconButton>
+    </Actions>
+  </Snackbar>
+    
 <!-- <code>
     <div>currentUserChoiceIdx={currentUserChoiceIdx}</div>
     <div>userChoices[currentUserChoiceIdx]={JSON.stringify(userChoices[currentUserChoiceIdx], null, 2)}</div>
