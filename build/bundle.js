@@ -17205,12 +17205,12 @@ var app = (function () {
 
     function get_each_context$1(ctx, list, i) {
     	const child_ctx = ctx.slice();
-    	child_ctx[21] = list[i];
-    	child_ctx[23] = i;
+    	child_ctx[25] = list[i];
+    	child_ctx[27] = i;
     	return child_ctx;
     }
 
-    // (115:0) {#if currentGuideStep }
+    // (117:0) {#if currentGuideStep }
     function create_if_block$1(ctx) {
     	let ul;
     	let t;
@@ -17228,7 +17228,7 @@ var app = (function () {
     		each_blocks[i] = null;
     	});
 
-    	let if_block = /*visibleCard*/ ctx[5] && create_if_block_1$1(ctx);
+    	let if_block = /*visibleCard*/ ctx[6] && create_if_block_1$1(ctx);
 
     	const block = {
     		c: function create() {
@@ -17241,8 +17241,8 @@ var app = (function () {
     			t = space();
     			if (if_block) if_block.c();
     			if_block_anchor = empty();
-    			attr_dev(ul, "class", "breadcrumb svelte-190ooxt");
-    			add_location(ul, file$1, 115, 4, 4014);
+    			attr_dev(ul, "class", "breadcrumb svelte-1ojzkc");
+    			add_location(ul, file$1, 117, 4, 4048);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, ul, anchor);
@@ -17257,7 +17257,7 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*handleClickBreadcrumb, userChoices, currentUserChoiceIdx*/ 259) {
+    			if (dirty & /*handleClickBreadcrumb, userChoices, currentUserChoiceIdx*/ 1027) {
     				each_value = /*userChoices*/ ctx[1];
     				validate_each_argument(each_value);
     				let i;
@@ -17285,11 +17285,11 @@ var app = (function () {
     				check_outros();
     			}
 
-    			if (/*visibleCard*/ ctx[5]) {
+    			if (/*visibleCard*/ ctx[6]) {
     				if (if_block) {
     					if_block.p(ctx, dirty);
 
-    					if (dirty & /*visibleCard*/ 32) {
+    					if (dirty & /*visibleCard*/ 64) {
     						transition_in(if_block, 1);
     					}
     				} else {
@@ -17341,15 +17341,15 @@ var app = (function () {
     		block,
     		id: create_if_block$1.name,
     		type: "if",
-    		source: "(115:0) {#if currentGuideStep }",
+    		source: "(117:0) {#if currentGuideStep }",
     		ctx
     	});
 
     	return block;
     }
 
-    // (118:12) {#if userChoiceIdx <= currentUserChoiceIdx}
-    function create_if_block_5(ctx) {
+    // (120:12) {#if userChoiceIdx <= currentUserChoiceIdx}
+    function create_if_block_6(ctx) {
     	let li;
     	let current_block_type_index;
     	let if_block;
@@ -17357,12 +17357,12 @@ var app = (function () {
     	let li_intro;
     	let li_outro;
     	let current;
-    	const if_block_creators = [create_if_block_6, create_if_block_7];
+    	const if_block_creators = [create_if_block_7, create_if_block_8];
     	const if_blocks = [];
 
     	function select_block_type(ctx, dirty) {
-    		if (/*userChoiceIdx*/ ctx[23] < /*currentUserChoiceIdx*/ ctx[0]) return 0;
-    		if (/*userChoiceIdx*/ ctx[23] == /*currentUserChoiceIdx*/ ctx[0]) return 1;
+    		if (/*userChoiceIdx*/ ctx[27] < /*currentUserChoiceIdx*/ ctx[0]) return 0;
+    		if (/*userChoiceIdx*/ ctx[27] == /*currentUserChoiceIdx*/ ctx[0]) return 1;
     		return -1;
     	}
 
@@ -17375,8 +17375,8 @@ var app = (function () {
     			li = element("li");
     			if (if_block) if_block.c();
     			t = space();
-    			attr_dev(li, "class", "svelte-190ooxt");
-    			add_location(li, file$1, 118, 16, 4169);
+    			attr_dev(li, "class", "svelte-1ojzkc");
+    			add_location(li, file$1, 120, 16, 4203);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, li, anchor);
@@ -17455,24 +17455,24 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_5.name,
+    		id: create_if_block_6.name,
     		type: "if",
-    		source: "(118:12) {#if userChoiceIdx <= currentUserChoiceIdx}",
+    		source: "(120:12) {#if userChoiceIdx <= currentUserChoiceIdx}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (122:72) 
-    function create_if_block_7(ctx) {
+    // (124:72) 
+    function create_if_block_8(ctx) {
     	let button;
     	let current;
 
     	button = new Button_1({
     			props: {
     				disabled: true,
-    				$$slots: { default: [create_default_slot_8$1] },
+    				$$slots: { default: [create_default_slot_11$1] },
     				$$scope: { ctx }
     			},
     			$$inline: true
@@ -17489,7 +17489,69 @@ var app = (function () {
     		p: function update(ctx, dirty) {
     			const button_changes = {};
 
-    			if (dirty & /*$$scope, userChoices*/ 16777218) {
+    			if (dirty & /*$$scope, userChoices*/ 268435458) {
+    				button_changes.$$scope = { dirty, ctx };
+    			}
+
+    			button.$set(button_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(button.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(button.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(button, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_8.name,
+    		type: "if",
+    		source: "(124:72) ",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (122:24) {#if userChoiceIdx < currentUserChoiceIdx}
+    function create_if_block_7(ctx) {
+    	let button;
+    	let current;
+
+    	function click_handler() {
+    		return /*click_handler*/ ctx[13](/*userChoiceIdx*/ ctx[27]);
+    	}
+
+    	button = new Button_1({
+    			props: {
+    				$$slots: { default: [create_default_slot_10$1] },
+    				$$scope: { ctx }
+    			},
+    			$$inline: true
+    		});
+
+    	button.$on("click", click_handler);
+
+    	const block = {
+    		c: function create() {
+    			create_component(button.$$.fragment);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(button, target, anchor);
+    			current = true;
+    		},
+    		p: function update(new_ctx, dirty) {
+    			ctx = new_ctx;
+    			const button_changes = {};
+
+    			if (dirty & /*$$scope, userChoices*/ 268435458) {
     				button_changes.$$scope = { dirty, ctx };
     			}
 
@@ -17513,80 +17575,18 @@ var app = (function () {
     		block,
     		id: create_if_block_7.name,
     		type: "if",
-    		source: "(122:72) ",
+    		source: "(122:24) {#if userChoiceIdx < currentUserChoiceIdx}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (120:24) {#if userChoiceIdx < currentUserChoiceIdx}
-    function create_if_block_6(ctx) {
-    	let button;
-    	let current;
-
-    	function click_handler() {
-    		return /*click_handler*/ ctx[11](/*userChoiceIdx*/ ctx[23]);
-    	}
-
-    	button = new Button_1({
-    			props: {
-    				$$slots: { default: [create_default_slot_7$1] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
-
-    	button.$on("click", click_handler);
-
-    	const block = {
-    		c: function create() {
-    			create_component(button.$$.fragment);
-    		},
-    		m: function mount(target, anchor) {
-    			mount_component(button, target, anchor);
-    			current = true;
-    		},
-    		p: function update(new_ctx, dirty) {
-    			ctx = new_ctx;
-    			const button_changes = {};
-
-    			if (dirty & /*$$scope, userChoices*/ 16777218) {
-    				button_changes.$$scope = { dirty, ctx };
-    			}
-
-    			button.$set(button_changes);
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(button.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(button.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			destroy_component(button, detaching);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_if_block_6.name,
-    		type: "if",
-    		source: "(120:24) {#if userChoiceIdx < currentUserChoiceIdx}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (123:28) <Button disabled>
-    function create_default_slot_8$1(ctx) {
-    	let t_value = (/*userChoice*/ ctx[21].selectedChoiceKey
-    	? /*userChoice*/ ctx[21].selectedChoiceKey
-    	: /*userChoice*/ ctx[21].stepKey) + "";
+    // (125:28) <Button disabled>
+    function create_default_slot_11$1(ctx) {
+    	let t_value = (/*userChoice*/ ctx[25].selectedChoiceKey
+    	? /*userChoice*/ ctx[25].selectedChoiceKey
+    	: /*userChoice*/ ctx[25].stepKey) + "";
 
     	let t;
 
@@ -17598,9 +17598,9 @@ var app = (function () {
     			insert_dev(target, t, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*userChoices*/ 2 && t_value !== (t_value = (/*userChoice*/ ctx[21].selectedChoiceKey
-    			? /*userChoice*/ ctx[21].selectedChoiceKey
-    			: /*userChoice*/ ctx[21].stepKey) + "")) set_data_dev(t, t_value);
+    			if (dirty & /*userChoices*/ 2 && t_value !== (t_value = (/*userChoice*/ ctx[25].selectedChoiceKey
+    			? /*userChoice*/ ctx[25].selectedChoiceKey
+    			: /*userChoice*/ ctx[25].stepKey) + "")) set_data_dev(t, t_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(t);
@@ -17609,18 +17609,18 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_8$1.name,
+    		id: create_default_slot_11$1.name,
     		type: "slot",
-    		source: "(123:28) <Button disabled>",
+    		source: "(125:28) <Button disabled>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (121:28) <Button on:click={() => handleClickBreadcrumb(userChoiceIdx)}>
-    function create_default_slot_7$1(ctx) {
-    	let t_value = /*userChoice*/ ctx[21].selectedChoiceKey + "";
+    // (123:28) <Button on:click={() => handleClickBreadcrumb(userChoiceIdx)}>
+    function create_default_slot_10$1(ctx) {
+    	let t_value = /*userChoice*/ ctx[25].selectedChoiceKey + "";
     	let t;
 
     	const block = {
@@ -17631,7 +17631,7 @@ var app = (function () {
     			insert_dev(target, t, anchor);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*userChoices*/ 2 && t_value !== (t_value = /*userChoice*/ ctx[21].selectedChoiceKey + "")) set_data_dev(t, t_value);
+    			if (dirty & /*userChoices*/ 2 && t_value !== (t_value = /*userChoice*/ ctx[25].selectedChoiceKey + "")) set_data_dev(t, t_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(t);
@@ -17640,20 +17640,20 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_7$1.name,
+    		id: create_default_slot_10$1.name,
     		type: "slot",
-    		source: "(121:28) <Button on:click={() => handleClickBreadcrumb(userChoiceIdx)}>",
+    		source: "(123:28) <Button on:click={() => handleClickBreadcrumb(userChoiceIdx)}>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (117:8) {#each userChoices as userChoice,userChoiceIdx}
+    // (119:8) {#each userChoices as userChoice,userChoiceIdx}
     function create_each_block$1(ctx) {
     	let if_block_anchor;
     	let current;
-    	let if_block = /*userChoiceIdx*/ ctx[23] <= /*currentUserChoiceIdx*/ ctx[0] && create_if_block_5(ctx);
+    	let if_block = /*userChoiceIdx*/ ctx[27] <= /*currentUserChoiceIdx*/ ctx[0] && create_if_block_6(ctx);
 
     	const block = {
     		c: function create() {
@@ -17666,7 +17666,7 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, dirty) {
-    			if (/*userChoiceIdx*/ ctx[23] <= /*currentUserChoiceIdx*/ ctx[0]) {
+    			if (/*userChoiceIdx*/ ctx[27] <= /*currentUserChoiceIdx*/ ctx[0]) {
     				if (if_block) {
     					if_block.p(ctx, dirty);
 
@@ -17674,7 +17674,7 @@ var app = (function () {
     						transition_in(if_block, 1);
     					}
     				} else {
-    					if_block = create_if_block_5(ctx);
+    					if_block = create_if_block_6(ctx);
     					if_block.c();
     					transition_in(if_block, 1);
     					if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -17708,14 +17708,14 @@ var app = (function () {
     		block,
     		id: create_each_block$1.name,
     		type: "each",
-    		source: "(117:8) {#each userChoices as userChoice,userChoiceIdx}",
+    		source: "(119:8) {#each userChoices as userChoice,userChoiceIdx}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (130:4) {#if visibleCard }
+    // (132:4) {#if visibleCard }
     function create_if_block_1$1(ctx) {
     	let div;
     	let card;
@@ -17737,7 +17737,7 @@ var app = (function () {
     			div = element("div");
     			create_component(card.$$.fragment);
     			attr_dev(div, "class", "card-container");
-    			add_location(div, file$1, 130, 8, 4796);
+    			add_location(div, file$1, 132, 8, 4830);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -17748,7 +17748,7 @@ var app = (function () {
     			ctx = new_ctx;
     			const card_changes = {};
 
-    			if (dirty & /*$$scope, currentGuideStep, selected, currentUserChoice*/ 16777244) {
+    			if (dirty & /*$$scope, sendVia, currentGuideStep, selected, currentUserChoice*/ 268435516) {
     				card_changes.$$scope = { dirty, ctx };
     			}
 
@@ -17762,7 +17762,7 @@ var app = (function () {
     				if (div_outro) div_outro.end(1);
 
     				div_intro = create_in_transition(div, fly, {
-    					x: 200 * /*transitionMultiplier*/ ctx[6],
+    					x: 200 * /*transitionMultiplier*/ ctx[7],
     					duration: 750
     				});
 
@@ -17788,20 +17788,20 @@ var app = (function () {
     		block,
     		id: create_if_block_1$1.name,
     		type: "if",
-    		source: "(130:4) {#if visibleCard }",
+    		source: "(132:4) {#if visibleCard }",
     		ctx
     	});
 
     	return block;
     }
 
-    // (141:28) {:else}
+    // (143:28) {:else}
     function create_else_block(ctx) {
     	let div;
 
-    	let t_value = (/*currentGuideStep*/ ctx[3].question
-    	? /*currentGuideStep*/ ctx[3].question
-    	: /*currentGuideStep*/ ctx[3]) + "";
+    	let t_value = (/*currentGuideStep*/ ctx[4].question
+    	? /*currentGuideStep*/ ctx[4].question
+    	: /*currentGuideStep*/ ctx[4]) + "";
 
     	let t;
 
@@ -17809,17 +17809,17 @@ var app = (function () {
     		c: function create() {
     			div = element("div");
     			t = text(t_value);
-    			attr_dev(div, "class", "guide-prompt svelte-190ooxt");
-    			add_location(div, file$1, 141, 32, 5711);
+    			attr_dev(div, "class", "guide-prompt svelte-1ojzkc");
+    			add_location(div, file$1, 143, 32, 5745);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
     			append_dev(div, t);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*currentGuideStep*/ 8 && t_value !== (t_value = (/*currentGuideStep*/ ctx[3].question
-    			? /*currentGuideStep*/ ctx[3].question
-    			: /*currentGuideStep*/ ctx[3]) + "")) set_data_dev(t, t_value);
+    			if (dirty & /*currentGuideStep*/ 16 && t_value !== (t_value = (/*currentGuideStep*/ ctx[4].question
+    			? /*currentGuideStep*/ ctx[4].question
+    			: /*currentGuideStep*/ ctx[4]) + "")) set_data_dev(t, t_value);
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div);
@@ -17830,35 +17830,35 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(141:28) {:else}",
+    		source: "(143:28) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (139:28) {#if (typeof currentGuideStep == 'string' || currentGuideStep instanceof String) && isValidHttpUrl(currentGuideStep)}
-    function create_if_block_4(ctx) {
+    // (141:28) {#if (typeof currentGuideStep == 'string' || currentGuideStep instanceof String) && isValidHttpUrl(currentGuideStep)}
+    function create_if_block_5(ctx) {
     	let a;
     	let t;
 
     	const block = {
     		c: function create() {
     			a = element("a");
-    			t = text(/*currentGuideStep*/ ctx[3]);
-    			attr_dev(a, "href", /*currentGuideStep*/ ctx[3]);
+    			t = text(/*currentGuideStep*/ ctx[4]);
+    			attr_dev(a, "href", /*currentGuideStep*/ ctx[4]);
     			attr_dev(a, "target", "_tab");
-    			add_location(a, file$1, 139, 32, 5577);
+    			add_location(a, file$1, 141, 32, 5611);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, a, anchor);
     			append_dev(a, t);
     		},
     		p: function update(ctx, dirty) {
-    			if (dirty & /*currentGuideStep*/ 8) set_data_dev(t, /*currentGuideStep*/ ctx[3]);
+    			if (dirty & /*currentGuideStep*/ 16) set_data_dev(t, /*currentGuideStep*/ ctx[4]);
 
-    			if (dirty & /*currentGuideStep*/ 8) {
-    				attr_dev(a, "href", /*currentGuideStep*/ ctx[3]);
+    			if (dirty & /*currentGuideStep*/ 16) {
+    				attr_dev(a, "href", /*currentGuideStep*/ ctx[4]);
     			}
     		},
     		d: function destroy(detaching) {
@@ -17868,17 +17868,223 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_4.name,
+    		id: create_if_block_5.name,
     		type: "if",
-    		source: "(139:28) {#if (typeof currentGuideStep == 'string' || currentGuideStep instanceof String) && isValidHttpUrl(currentGuideStep)}",
+    		source: "(141:28) {#if (typeof currentGuideStep == 'string' || currentGuideStep instanceof String) && isValidHttpUrl(currentGuideStep)}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (147:32) {#if currentGuideStep.choices}
-    function create_if_block_3(ctx) {
+    // (148:28) {#if currentGuideStep.choices}
+    function create_if_block_4(ctx) {
+    	let actions;
+    	let current;
+
+    	actions = new Actions({
+    			props: {
+    				$$slots: { default: [create_default_slot_6$1] },
+    				$$scope: { ctx }
+    			},
+    			$$inline: true
+    		});
+
+    	const block = {
+    		c: function create() {
+    			create_component(actions.$$.fragment);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(actions, target, anchor);
+    			current = true;
+    		},
+    		p: function update(ctx, dirty) {
+    			const actions_changes = {};
+
+    			if (dirty & /*$$scope, currentGuideStep, selected, currentUserChoice*/ 268435508) {
+    				actions_changes.$$scope = { dirty, ctx };
+    			}
+
+    			actions.$set(actions_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(actions.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(actions.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(actions, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_4.name,
+    		type: "if",
+    		source: "(148:28) {#if currentGuideStep.choices}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (159:48) <Label>
+    function create_default_slot_9$1(ctx) {
+    	let t_value = /*segment*/ ctx[24] + "";
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			t = text(t_value);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, t, anchor);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*segment*/ 16777216 && t_value !== (t_value = /*segment*/ ctx[24] + "")) set_data_dev(t, t_value);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(t);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_default_slot_9$1.name,
+    		type: "slot",
+    		source: "(159:48) <Label>",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (156:44) <Segment {segment}                                                  on:click={() => handleClickChoice(currentUserChoice, segment)}                                                   style="flex: 1;">
+    function create_default_slot_8$1(ctx) {
+    	let label;
+    	let current;
+
+    	label = new Label({
+    			props: {
+    				$$slots: { default: [create_default_slot_9$1] },
+    				$$scope: { ctx }
+    			},
+    			$$inline: true
+    		});
+
+    	const block = {
+    		c: function create() {
+    			create_component(label.$$.fragment);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(label, target, anchor);
+    			current = true;
+    		},
+    		p: function update(ctx, dirty) {
+    			const label_changes = {};
+
+    			if (dirty & /*$$scope, segment*/ 285212672) {
+    				label_changes.$$scope = { dirty, ctx };
+    			}
+
+    			label.$set(label_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(label.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(label.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(label, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_default_slot_8$1.name,
+    		type: "slot",
+    		source: "(156:44) <Segment {segment}                                                  on:click={() => handleClickChoice(currentUserChoice, segment)}                                                   style=\\\"flex: 1;\\\">",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (152:40) <SegmentedButton                                              segments={Object.keys(currentGuideStep.choices)}                                               let:segment singleSelect                                               bind:selected>
+    function create_default_slot_7$1(ctx) {
+    	let segment;
+    	let current;
+
+    	function click_handler_1() {
+    		return /*click_handler_1*/ ctx[14](/*segment*/ ctx[24]);
+    	}
+
+    	segment = new Segment({
+    			props: {
+    				segment: /*segment*/ ctx[24],
+    				style: "flex: 1;",
+    				$$slots: { default: [create_default_slot_8$1] },
+    				$$scope: { ctx }
+    			},
+    			$$inline: true
+    		});
+
+    	segment.$on("click", click_handler_1);
+
+    	const block = {
+    		c: function create() {
+    			create_component(segment.$$.fragment);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(segment, target, anchor);
+    			current = true;
+    		},
+    		p: function update(new_ctx, dirty) {
+    			ctx = new_ctx;
+    			const segment_changes = {};
+    			if (dirty & /*segment*/ 16777216) segment_changes.segment = /*segment*/ ctx[24];
+
+    			if (dirty & /*$$scope, segment*/ 285212672) {
+    				segment_changes.$$scope = { dirty, ctx };
+    			}
+
+    			segment.$set(segment_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(segment.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(segment.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(segment, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_default_slot_7$1.name,
+    		type: "slot",
+    		source: "(152:40) <SegmentedButton                                              segments={Object.keys(currentGuideStep.choices)}                                               let:segment singleSelect                                               bind:selected>",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (149:32) <Actions>
+    function create_default_slot_6$1(ctx) {
     	let div1;
     	let div0;
     	let segmentedbutton;
@@ -17886,24 +18092,24 @@ var app = (function () {
     	let current;
 
     	function segmentedbutton_selected_binding(value) {
-    		/*segmentedbutton_selected_binding*/ ctx[13](value);
+    		/*segmentedbutton_selected_binding*/ ctx[15](value);
     	}
 
     	let segmentedbutton_props = {
-    		segments: Object.keys(/*currentGuideStep*/ ctx[3].choices),
+    		segments: Object.keys(/*currentGuideStep*/ ctx[4].choices),
     		singleSelect: true,
     		$$slots: {
     			default: [
-    				create_default_slot_4$1,
-    				({ segment }) => ({ 20: segment }),
-    				({ segment }) => segment ? 1048576 : 0
+    				create_default_slot_7$1,
+    				({ segment }) => ({ 24: segment }),
+    				({ segment }) => segment ? 16777216 : 0
     			]
     		},
     		$$scope: { ctx }
     	};
 
-    	if (/*selected*/ ctx[4] !== void 0) {
-    		segmentedbutton_props.selected = /*selected*/ ctx[4];
+    	if (/*selected*/ ctx[5] !== void 0) {
+    		segmentedbutton_props.selected = /*selected*/ ctx[5];
     	}
 
     	segmentedbutton = new SegmentedButton({
@@ -17918,9 +18124,9 @@ var app = (function () {
     			div1 = element("div");
     			div0 = element("div");
     			create_component(segmentedbutton.$$.fragment);
-    			add_location(div0, file$1, 148, 40, 6143);
+    			add_location(div0, file$1, 150, 40, 6177);
     			attr_dev(div1, "class", "segmented-button-group");
-    			add_location(div1, file$1, 147, 36, 6065);
+    			add_location(div1, file$1, 149, 36, 6099);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -17930,15 +18136,15 @@ var app = (function () {
     		},
     		p: function update(ctx, dirty) {
     			const segmentedbutton_changes = {};
-    			if (dirty & /*currentGuideStep*/ 8) segmentedbutton_changes.segments = Object.keys(/*currentGuideStep*/ ctx[3].choices);
+    			if (dirty & /*currentGuideStep*/ 16) segmentedbutton_changes.segments = Object.keys(/*currentGuideStep*/ ctx[4].choices);
 
-    			if (dirty & /*$$scope, segment, currentUserChoice*/ 17825796) {
+    			if (dirty & /*$$scope, segment, currentUserChoice*/ 285212676) {
     				segmentedbutton_changes.$$scope = { dirty, ctx };
     			}
 
-    			if (!updating_selected && dirty & /*selected*/ 16) {
+    			if (!updating_selected && dirty & /*selected*/ 32) {
     				updating_selected = true;
-    				segmentedbutton_changes.selected = /*selected*/ ctx[4];
+    				segmentedbutton_changes.selected = /*selected*/ ctx[5];
     				add_flush_callback(() => updating_selected = false);
     			}
 
@@ -17961,234 +18167,17 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_3.name,
-    		type: "if",
-    		source: "(147:32) {#if currentGuideStep.choices}",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (157:48) <Label>
-    function create_default_slot_6$1(ctx) {
-    	let t_value = /*segment*/ ctx[20] + "";
-    	let t;
-
-    	const block = {
-    		c: function create() {
-    			t = text(t_value);
-    		},
-    		m: function mount(target, anchor) {
-    			insert_dev(target, t, anchor);
-    		},
-    		p: function update(ctx, dirty) {
-    			if (dirty & /*segment*/ 1048576 && t_value !== (t_value = /*segment*/ ctx[20] + "")) set_data_dev(t, t_value);
-    		},
-    		d: function destroy(detaching) {
-    			if (detaching) detach_dev(t);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
     		id: create_default_slot_6$1.name,
     		type: "slot",
-    		source: "(157:48) <Label>",
+    		source: "(149:32) <Actions>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (154:44) <Segment {segment}                                                  on:click={() => handleClickChoice(currentUserChoice, segment)}                                                   style="flex: 1;">
-    function create_default_slot_5$1(ctx) {
-    	let label;
-    	let current;
-
-    	label = new Label({
-    			props: {
-    				$$slots: { default: [create_default_slot_6$1] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
-
-    	const block = {
-    		c: function create() {
-    			create_component(label.$$.fragment);
-    		},
-    		m: function mount(target, anchor) {
-    			mount_component(label, target, anchor);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			const label_changes = {};
-
-    			if (dirty & /*$$scope, segment*/ 17825792) {
-    				label_changes.$$scope = { dirty, ctx };
-    			}
-
-    			label.$set(label_changes);
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(label.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(label.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			destroy_component(label, detaching);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_default_slot_5$1.name,
-    		type: "slot",
-    		source: "(154:44) <Segment {segment}                                                  on:click={() => handleClickChoice(currentUserChoice, segment)}                                                   style=\\\"flex: 1;\\\">",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (150:40) <SegmentedButton                                              segments={Object.keys(currentGuideStep.choices)}                                               let:segment singleSelect                                               bind:selected>
-    function create_default_slot_4$1(ctx) {
-    	let segment;
-    	let current;
-
-    	function click_handler_1() {
-    		return /*click_handler_1*/ ctx[12](/*segment*/ ctx[20]);
-    	}
-
-    	segment = new Segment({
-    			props: {
-    				segment: /*segment*/ ctx[20],
-    				style: "flex: 1;",
-    				$$slots: { default: [create_default_slot_5$1] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
-
-    	segment.$on("click", click_handler_1);
-
-    	const block = {
-    		c: function create() {
-    			create_component(segment.$$.fragment);
-    		},
-    		m: function mount(target, anchor) {
-    			mount_component(segment, target, anchor);
-    			current = true;
-    		},
-    		p: function update(new_ctx, dirty) {
-    			ctx = new_ctx;
-    			const segment_changes = {};
-    			if (dirty & /*segment*/ 1048576) segment_changes.segment = /*segment*/ ctx[20];
-
-    			if (dirty & /*$$scope, segment*/ 17825792) {
-    				segment_changes.$$scope = { dirty, ctx };
-    			}
-
-    			segment.$set(segment_changes);
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(segment.$$.fragment, local);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(segment.$$.fragment, local);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			destroy_component(segment, detaching);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_default_slot_4$1.name,
-    		type: "slot",
-    		source: "(150:40) <SegmentedButton                                              segments={Object.keys(currentGuideStep.choices)}                                               let:segment singleSelect                                               bind:selected>",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (146:28) <Actions>
-    function create_default_slot_3$1(ctx) {
-    	let if_block_anchor;
-    	let current;
-    	let if_block = /*currentGuideStep*/ ctx[3].choices && create_if_block_3(ctx);
-
-    	const block = {
-    		c: function create() {
-    			if (if_block) if_block.c();
-    			if_block_anchor = empty();
-    		},
-    		m: function mount(target, anchor) {
-    			if (if_block) if_block.m(target, anchor);
-    			insert_dev(target, if_block_anchor, anchor);
-    			current = true;
-    		},
-    		p: function update(ctx, dirty) {
-    			if (/*currentGuideStep*/ ctx[3].choices) {
-    				if (if_block) {
-    					if_block.p(ctx, dirty);
-
-    					if (dirty & /*currentGuideStep*/ 8) {
-    						transition_in(if_block, 1);
-    					}
-    				} else {
-    					if_block = create_if_block_3(ctx);
-    					if_block.c();
-    					transition_in(if_block, 1);
-    					if_block.m(if_block_anchor.parentNode, if_block_anchor);
-    				}
-    			} else if (if_block) {
-    				group_outros();
-
-    				transition_out(if_block, 1, 1, () => {
-    					if_block = null;
-    				});
-
-    				check_outros();
-    			}
-    		},
-    		i: function intro(local) {
-    			if (current) return;
-    			transition_in(if_block);
-    			current = true;
-    		},
-    		o: function outro(local) {
-    			transition_out(if_block);
-    			current = false;
-    		},
-    		d: function destroy(detaching) {
-    			if (if_block) if_block.d(detaching);
-    			if (detaching) detach_dev(if_block_anchor);
-    		}
-    	};
-
-    	dispatch_dev("SvelteRegisterBlock", {
-    		block,
-    		id: create_default_slot_3$1.name,
-    		type: "slot",
-    		source: "(146:28) <Actions>",
-    		ctx
-    	});
-
-    	return block;
-    }
-
-    // (166:20) {#if currentGuideStep.learnMore}
-    function create_if_block_2$1(ctx) {
+    // (168:20) {#if currentGuideStep.learnMore}
+    function create_if_block_3(ctx) {
     	let div;
     	let button;
     	let current;
@@ -18197,20 +18186,20 @@ var app = (function () {
     			props: {
     				text: true,
     				class: "primary-text",
-    				$$slots: { default: [create_default_slot_2$1] },
+    				$$slots: { default: [create_default_slot_5$1] },
     				$$scope: { ctx }
     			},
     			$$inline: true
     		});
 
-    	button.$on("click", /*click_handler_2*/ ctx[14]);
+    	button.$on("click", /*click_handler_2*/ ctx[16]);
 
     	const block = {
     		c: function create() {
     			div = element("div");
     			create_component(button.$$.fragment);
-    			attr_dev(div, "class", "learn-more svelte-190ooxt");
-    			add_location(div, file$1, 166, 24, 7245);
+    			attr_dev(div, "class", "learn-more svelte-1ojzkc");
+    			add_location(div, file$1, 168, 24, 7279);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -18220,7 +18209,7 @@ var app = (function () {
     		p: function update(ctx, dirty) {
     			const button_changes = {};
 
-    			if (dirty & /*$$scope*/ 16777216) {
+    			if (dirty & /*$$scope*/ 268435456) {
     				button_changes.$$scope = { dirty, ctx };
     			}
 
@@ -18243,17 +18232,17 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block_2$1.name,
+    		id: create_if_block_3.name,
     		type: "if",
-    		source: "(166:20) {#if currentGuideStep.learnMore}",
+    		source: "(168:20) {#if currentGuideStep.learnMore}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (168:28) <Button text class="primary-text" on:click={() => {window.open(currentGuideStep.learnMore, "_tab")}}>
-    function create_default_slot_2$1(ctx) {
+    // (170:28) <Button text class="primary-text" on:click={() => {window.open(currentGuideStep.learnMore, "_tab")}}>
+    function create_default_slot_5$1(ctx) {
     	let t;
 
     	const block = {
@@ -18270,16 +18259,273 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_2$1.name,
+    		id: create_default_slot_5$1.name,
     		type: "slot",
-    		source: "(168:28) <Button text class=\\\"primary-text\\\" on:click={() => {window.open(currentGuideStep.learnMore, \\\"_tab\\\")}}>",
+    		source: "(170:28) <Button text class=\\\"primary-text\\\" on:click={() => {window.open(currentGuideStep.learnMore, \\\"_tab\\\")}}>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (133:16) <Content>
+    // (173:20) {#if !currentGuideStep.choices}
+    function create_if_block_2$1(ctx) {
+    	let div1;
+    	let div0;
+    	let t1;
+    	let segmentedbutton;
+    	let updating_selected;
+    	let current;
+
+    	function segmentedbutton_selected_binding_1(value) {
+    		/*segmentedbutton_selected_binding_1*/ ctx[18](value);
+    	}
+
+    	let segmentedbutton_props = {
+    		segments: [
+    			"US mail",
+    			"phone",
+    			"fax",
+    			"email",
+    			"text message",
+    			"telegraph",
+    			"smoke signals",
+    			"telepathy"
+    		],
+    		singleSelect: true,
+    		$$slots: {
+    			default: [
+    				create_default_slot_2$1,
+    				({ segment }) => ({ 24: segment }),
+    				({ segment }) => segment ? 16777216 : 0
+    			]
+    		},
+    		$$scope: { ctx }
+    	};
+
+    	if (/*sendVia*/ ctx[3] !== void 0) {
+    		segmentedbutton_props.selected = /*sendVia*/ ctx[3];
+    	}
+
+    	segmentedbutton = new SegmentedButton({
+    			props: segmentedbutton_props,
+    			$$inline: true
+    		});
+
+    	binding_callbacks.push(() => bind(segmentedbutton, 'selected', segmentedbutton_selected_binding_1));
+
+    	const block = {
+    		c: function create() {
+    			div1 = element("div");
+    			div0 = element("div");
+    			div0.textContent = "Send via:";
+    			t1 = space();
+    			create_component(segmentedbutton.$$.fragment);
+    			set_style(div0, "margin-top", "1em");
+    			add_location(div0, file$1, 174, 28, 7672);
+    			attr_dev(div1, "class", "segmented-button-group send-via-group svelte-1ojzkc");
+    			add_location(div1, file$1, 173, 24, 7591);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, div0);
+    			append_dev(div1, t1);
+    			mount_component(segmentedbutton, div1, null);
+    			current = true;
+    		},
+    		p: function update(ctx, dirty) {
+    			const segmentedbutton_changes = {};
+
+    			if (dirty & /*$$scope, segment*/ 285212672) {
+    				segmentedbutton_changes.$$scope = { dirty, ctx };
+    			}
+
+    			if (!updating_selected && dirty & /*sendVia*/ 8) {
+    				updating_selected = true;
+    				segmentedbutton_changes.selected = /*sendVia*/ ctx[3];
+    				add_flush_callback(() => updating_selected = false);
+    			}
+
+    			segmentedbutton.$set(segmentedbutton_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(segmentedbutton.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(segmentedbutton.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div1);
+    			destroy_component(segmentedbutton);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block_2$1.name,
+    		type: "if",
+    		source: "(173:20) {#if !currentGuideStep.choices}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (183:36) <Label>
+    function create_default_slot_4$1(ctx) {
+    	let t_value = /*segment*/ ctx[24] + "";
+    	let t;
+
+    	const block = {
+    		c: function create() {
+    			t = text(t_value);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, t, anchor);
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*segment*/ 16777216 && t_value !== (t_value = /*segment*/ ctx[24] + "")) set_data_dev(t, t_value);
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(t);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_default_slot_4$1.name,
+    		type: "slot",
+    		source: "(183:36) <Label>",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (180:32) <Segment {segment}                                      on:click={() => handleClickChoice(sendViaChoice, segment)}                                       style="flex: 1;">
+    function create_default_slot_3$1(ctx) {
+    	let label;
+    	let current;
+
+    	label = new Label({
+    			props: {
+    				$$slots: { default: [create_default_slot_4$1] },
+    				$$scope: { ctx }
+    			},
+    			$$inline: true
+    		});
+
+    	const block = {
+    		c: function create() {
+    			create_component(label.$$.fragment);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(label, target, anchor);
+    			current = true;
+    		},
+    		p: function update(ctx, dirty) {
+    			const label_changes = {};
+
+    			if (dirty & /*$$scope, segment*/ 285212672) {
+    				label_changes.$$scope = { dirty, ctx };
+    			}
+
+    			label.$set(label_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(label.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(label.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(label, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_default_slot_3$1.name,
+    		type: "slot",
+    		source: "(180:32) <Segment {segment}                                      on:click={() => handleClickChoice(sendViaChoice, segment)}                                       style=\\\"flex: 1;\\\">",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (176:28) <SegmentedButton                                  segments={["US mail","phone","fax","email","text message","telegraph","smoke signals","telepathy"]}                                  let:segment singleSelect                                   bind:selected={sendVia}>
+    function create_default_slot_2$1(ctx) {
+    	let segment;
+    	let current;
+
+    	function click_handler_3() {
+    		return /*click_handler_3*/ ctx[17](/*segment*/ ctx[24]);
+    	}
+
+    	segment = new Segment({
+    			props: {
+    				segment: /*segment*/ ctx[24],
+    				style: "flex: 1;",
+    				$$slots: { default: [create_default_slot_3$1] },
+    				$$scope: { ctx }
+    			},
+    			$$inline: true
+    		});
+
+    	segment.$on("click", click_handler_3);
+
+    	const block = {
+    		c: function create() {
+    			create_component(segment.$$.fragment);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(segment, target, anchor);
+    			current = true;
+    		},
+    		p: function update(new_ctx, dirty) {
+    			ctx = new_ctx;
+    			const segment_changes = {};
+    			if (dirty & /*segment*/ 16777216) segment_changes.segment = /*segment*/ ctx[24];
+
+    			if (dirty & /*$$scope, segment*/ 285212672) {
+    				segment_changes.$$scope = { dirty, ctx };
+    			}
+
+    			segment.$set(segment_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(segment.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(segment.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(segment, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_default_slot_2$1.name,
+    		type: "slot",
+    		source: "(176:28) <SegmentedButton                                  segments={[\\\"US mail\\\",\\\"phone\\\",\\\"fax\\\",\\\"email\\\",\\\"text message\\\",\\\"telegraph\\\",\\\"smoke signals\\\",\\\"telepathy\\\"]}                                  let:segment singleSelect                                   bind:selected={sendVia}>",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (135:16) <Content>
     function create_default_slot_1$1(ctx) {
     	let div3;
     	let div1;
@@ -18288,30 +18534,23 @@ var app = (function () {
     	let div2;
     	let show_if;
     	let t2;
-    	let actions;
     	let t3;
-    	let if_block1_anchor;
+    	let t4;
+    	let if_block3_anchor;
     	let current;
 
     	function select_block_type_1(ctx, dirty) {
-    		if (dirty & /*currentGuideStep*/ 8) show_if = null;
-    		if (show_if == null) show_if = !!((typeof /*currentGuideStep*/ ctx[3] == 'string' || /*currentGuideStep*/ ctx[3] instanceof String) && isValidHttpUrl(/*currentGuideStep*/ ctx[3]));
-    		if (show_if) return create_if_block_4;
+    		if (dirty & /*currentGuideStep*/ 16) show_if = null;
+    		if (show_if == null) show_if = !!((typeof /*currentGuideStep*/ ctx[4] == 'string' || /*currentGuideStep*/ ctx[4] instanceof String) && isValidHttpUrl(/*currentGuideStep*/ ctx[4]));
+    		if (show_if) return create_if_block_5;
     		return create_else_block;
     	}
 
     	let current_block_type = select_block_type_1(ctx, -1);
     	let if_block0 = current_block_type(ctx);
-
-    	actions = new Actions({
-    			props: {
-    				$$slots: { default: [create_default_slot_3$1] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
-
-    	let if_block1 = /*currentGuideStep*/ ctx[3].learnMore && create_if_block_2$1(ctx);
+    	let if_block1 = /*currentGuideStep*/ ctx[4].choices && create_if_block_4(ctx);
+    	let if_block2 = /*currentGuideStep*/ ctx[4].learnMore && create_if_block_3(ctx);
+    	let if_block3 = !/*currentGuideStep*/ ctx[4].choices && create_if_block_2$1(ctx);
 
     	const block = {
     		c: function create() {
@@ -18323,28 +18562,30 @@ var app = (function () {
     			div2 = element("div");
     			if_block0.c();
     			t2 = space();
-    			create_component(actions.$$.fragment);
-    			t3 = space();
     			if (if_block1) if_block1.c();
-    			if_block1_anchor = empty();
+    			t3 = space();
+    			if (if_block2) if_block2.c();
+    			t4 = space();
+    			if (if_block3) if_block3.c();
+    			if_block3_anchor = empty();
     			attr_dev(div0, "class", "mdc-typography--body1");
-    			add_location(div0, file$1, 135, 28, 5156);
+    			add_location(div0, file$1, 137, 28, 5190);
     			set_style(div1, "margin", "0px");
     			set_style(div1, "padding", "10px 0px");
     			set_style(div1, "color", "#888");
     			set_style(div1, "width", "50px");
-    			add_location(div1, file$1, 134, 24, 5056);
+    			add_location(div1, file$1, 136, 24, 5090);
     			set_style(div2, "flex-grow", "1");
     			set_style(div2, "font-size", "24px");
     			set_style(div2, "background-color", "#F3F5F6");
     			set_style(div2, "margin", "10px");
     			set_style(div2, "padding", "25px 20px");
     			attr_dev(div2, "class", "mdc-typography--body1");
-    			add_location(div2, file$1, 137, 24, 5261);
+    			add_location(div2, file$1, 139, 24, 5295);
     			attr_dev(div3, "class", "container");
     			set_style(div3, "display", "flex");
     			set_style(div3, "flex-wrap", "wrap");
-    			add_location(div3, file$1, 133, 20, 4967);
+    			add_location(div3, file$1, 135, 20, 5001);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div3, anchor);
@@ -18354,10 +18595,12 @@ var app = (function () {
     			append_dev(div3, div2);
     			if_block0.m(div2, null);
     			append_dev(div2, t2);
-    			mount_component(actions, div2, null);
+    			if (if_block1) if_block1.m(div2, null);
     			insert_dev(target, t3, anchor);
-    			if (if_block1) if_block1.m(target, anchor);
-    			insert_dev(target, if_block1_anchor, anchor);
+    			if (if_block2) if_block2.m(target, anchor);
+    			insert_dev(target, t4, anchor);
+    			if (if_block3) if_block3.m(target, anchor);
+    			insert_dev(target, if_block3_anchor, anchor);
     			current = true;
     		},
     		p: function update(ctx, dirty) {
@@ -18373,26 +18616,18 @@ var app = (function () {
     				}
     			}
 
-    			const actions_changes = {};
-
-    			if (dirty & /*$$scope, currentGuideStep, selected, currentUserChoice*/ 16777244) {
-    				actions_changes.$$scope = { dirty, ctx };
-    			}
-
-    			actions.$set(actions_changes);
-
-    			if (/*currentGuideStep*/ ctx[3].learnMore) {
+    			if (/*currentGuideStep*/ ctx[4].choices) {
     				if (if_block1) {
     					if_block1.p(ctx, dirty);
 
-    					if (dirty & /*currentGuideStep*/ 8) {
+    					if (dirty & /*currentGuideStep*/ 16) {
     						transition_in(if_block1, 1);
     					}
     				} else {
-    					if_block1 = create_if_block_2$1(ctx);
+    					if_block1 = create_if_block_4(ctx);
     					if_block1.c();
     					transition_in(if_block1, 1);
-    					if_block1.m(if_block1_anchor.parentNode, if_block1_anchor);
+    					if_block1.m(div2, null);
     				}
     			} else if (if_block1) {
     				group_outros();
@@ -18403,25 +18638,75 @@ var app = (function () {
 
     				check_outros();
     			}
+
+    			if (/*currentGuideStep*/ ctx[4].learnMore) {
+    				if (if_block2) {
+    					if_block2.p(ctx, dirty);
+
+    					if (dirty & /*currentGuideStep*/ 16) {
+    						transition_in(if_block2, 1);
+    					}
+    				} else {
+    					if_block2 = create_if_block_3(ctx);
+    					if_block2.c();
+    					transition_in(if_block2, 1);
+    					if_block2.m(t4.parentNode, t4);
+    				}
+    			} else if (if_block2) {
+    				group_outros();
+
+    				transition_out(if_block2, 1, 1, () => {
+    					if_block2 = null;
+    				});
+
+    				check_outros();
+    			}
+
+    			if (!/*currentGuideStep*/ ctx[4].choices) {
+    				if (if_block3) {
+    					if_block3.p(ctx, dirty);
+
+    					if (dirty & /*currentGuideStep*/ 16) {
+    						transition_in(if_block3, 1);
+    					}
+    				} else {
+    					if_block3 = create_if_block_2$1(ctx);
+    					if_block3.c();
+    					transition_in(if_block3, 1);
+    					if_block3.m(if_block3_anchor.parentNode, if_block3_anchor);
+    				}
+    			} else if (if_block3) {
+    				group_outros();
+
+    				transition_out(if_block3, 1, 1, () => {
+    					if_block3 = null;
+    				});
+
+    				check_outros();
+    			}
     		},
     		i: function intro(local) {
     			if (current) return;
-    			transition_in(actions.$$.fragment, local);
     			transition_in(if_block1);
+    			transition_in(if_block2);
+    			transition_in(if_block3);
     			current = true;
     		},
     		o: function outro(local) {
-    			transition_out(actions.$$.fragment, local);
     			transition_out(if_block1);
+    			transition_out(if_block2);
+    			transition_out(if_block3);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div3);
     			if_block0.d();
-    			destroy_component(actions);
+    			if (if_block1) if_block1.d();
     			if (detaching) detach_dev(t3);
-    			if (if_block1) if_block1.d(detaching);
-    			if (detaching) detach_dev(if_block1_anchor);
+    			if (if_block2) if_block2.d(detaching);
+    			if (detaching) detach_dev(t4);
+    			if (if_block3) if_block3.d(detaching);
+    			if (detaching) detach_dev(if_block3_anchor);
     		}
     	};
 
@@ -18429,14 +18714,14 @@ var app = (function () {
     		block,
     		id: create_default_slot_1$1.name,
     		type: "slot",
-    		source: "(133:16) <Content>",
+    		source: "(135:16) <Content>",
     		ctx
     	});
 
     	return block;
     }
 
-    // (132:12) <Card padded>
+    // (134:12) <Card padded>
     function create_default_slot$1(ctx) {
     	let content;
     	let current;
@@ -18460,7 +18745,7 @@ var app = (function () {
     		p: function update(ctx, dirty) {
     			const content_changes = {};
 
-    			if (dirty & /*$$scope, currentGuideStep, selected, currentUserChoice*/ 16777244) {
+    			if (dirty & /*$$scope, sendVia, currentGuideStep, selected, currentUserChoice*/ 268435516) {
     				content_changes.$$scope = { dirty, ctx };
     			}
 
@@ -18484,7 +18769,7 @@ var app = (function () {
     		block,
     		id: create_default_slot$1.name,
     		type: "slot",
-    		source: "(132:12) <Card padded>",
+    		source: "(134:12) <Card padded>",
     		ctx
     	});
 
@@ -18499,7 +18784,7 @@ var app = (function () {
     	let t1;
     	let if_block_anchor;
     	let current;
-    	let if_block = /*currentGuideStep*/ ctx[3] && create_if_block$1(ctx);
+    	let if_block = /*currentGuideStep*/ ctx[4] && create_if_block$1(ctx);
 
     	const block = {
     		c: function create() {
@@ -18535,11 +18820,11 @@ var app = (function () {
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			if (/*currentGuideStep*/ ctx[3]) {
+    			if (/*currentGuideStep*/ ctx[4]) {
     				if (if_block) {
     					if_block.p(ctx, dirty);
 
-    					if (dirty & /*currentGuideStep*/ 8) {
+    					if (dirty & /*currentGuideStep*/ 16) {
     						transition_in(if_block, 1);
     					}
     				} else {
@@ -18628,6 +18913,8 @@ var app = (function () {
     	let currentUserChoiceIdx = 0;
     	let userChoices = [startingUserChoice];
     	let currentUserChoice;
+    	let sendVia;
+    	let sendViaChoice;
     	let currentGuideStep;
     	let selected;
     	let htmlContent = '';
@@ -18638,7 +18925,7 @@ var app = (function () {
     	const handleClickChoice = (userChoice, choiceKey) => {
     		if (!disabled) {
     			disabled = true;
-    			$$invalidate(4, selected = choiceKey);
+    			$$invalidate(5, selected = choiceKey);
 
     			if (choiceKey !== userChoice.selectedChoiceKey) {
     				$$invalidate(1, userChoices.length = currentUserChoiceIdx + 1, userChoices);
@@ -18671,13 +18958,13 @@ var app = (function () {
     	};
 
     	function transitionCard(toRight, callback) {
-    		$$invalidate(6, transitionMultiplier = toRight ? -1 : 1);
-    		$$invalidate(5, visibleCard = false);
+    		$$invalidate(7, transitionMultiplier = toRight ? -1 : 1);
+    		$$invalidate(6, visibleCard = false);
 
     		setTimeout(
     			() => {
     				callback();
-    				$$invalidate(5, visibleCard = true);
+    				$$invalidate(6, visibleCard = true);
     			},
     			500
     		);
@@ -18686,7 +18973,7 @@ var app = (function () {
     	const handleClickBreadcrumb = userChoiceIdx => {
     		transitionCard(true, () => {
     			$$invalidate(0, currentUserChoiceIdx = userChoiceIdx);
-    			$$invalidate(4, selected = userChoices[currentUserChoiceIdx].selectedChoiceKey);
+    			$$invalidate(5, selected = userChoices[currentUserChoiceIdx].selectedChoiceKey);
     		});
     	};
 
@@ -18711,16 +18998,23 @@ var app = (function () {
 
     	function segmentedbutton_selected_binding(value) {
     		selected = value;
-    		$$invalidate(4, selected);
+    		$$invalidate(5, selected);
     	}
 
     	const click_handler_2 = () => {
     		window.open(currentGuideStep.learnMore, "_tab");
     	};
 
+    	const click_handler_3 = segment => handleClickChoice(sendViaChoice, segment);
+
+    	function segmentedbutton_selected_binding_1(value) {
+    		sendVia = value;
+    		$$invalidate(3, sendVia);
+    	}
+
     	$$self.$$set = $$props => {
-    		if ('guideData' in $$props) $$invalidate(9, guideData = $$props.guideData);
-    		if ('startingStepKey' in $$props) $$invalidate(10, startingStepKey = $$props.startingStepKey);
+    		if ('guideData' in $$props) $$invalidate(11, guideData = $$props.guideData);
+    		if ('startingStepKey' in $$props) $$invalidate(12, startingStepKey = $$props.startingStepKey);
     	};
 
     	$$self.$capture_state = () => ({
@@ -18740,6 +19034,8 @@ var app = (function () {
     		currentUserChoiceIdx,
     		userChoices,
     		currentUserChoice,
+    		sendVia,
+    		sendViaChoice,
     		currentGuideStep,
     		selected,
     		htmlContent,
@@ -18755,17 +19051,19 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('guideData' in $$props) $$invalidate(9, guideData = $$props.guideData);
-    		if ('startingStepKey' in $$props) $$invalidate(10, startingStepKey = $$props.startingStepKey);
+    		if ('guideData' in $$props) $$invalidate(11, guideData = $$props.guideData);
+    		if ('startingStepKey' in $$props) $$invalidate(12, startingStepKey = $$props.startingStepKey);
     		if ('startingUserChoice' in $$props) startingUserChoice = $$props.startingUserChoice;
     		if ('currentUserChoiceIdx' in $$props) $$invalidate(0, currentUserChoiceIdx = $$props.currentUserChoiceIdx);
     		if ('userChoices' in $$props) $$invalidate(1, userChoices = $$props.userChoices);
     		if ('currentUserChoice' in $$props) $$invalidate(2, currentUserChoice = $$props.currentUserChoice);
-    		if ('currentGuideStep' in $$props) $$invalidate(3, currentGuideStep = $$props.currentGuideStep);
-    		if ('selected' in $$props) $$invalidate(4, selected = $$props.selected);
+    		if ('sendVia' in $$props) $$invalidate(3, sendVia = $$props.sendVia);
+    		if ('sendViaChoice' in $$props) $$invalidate(8, sendViaChoice = $$props.sendViaChoice);
+    		if ('currentGuideStep' in $$props) $$invalidate(4, currentGuideStep = $$props.currentGuideStep);
+    		if ('selected' in $$props) $$invalidate(5, selected = $$props.selected);
     		if ('htmlContent' in $$props) htmlContent = $$props.htmlContent;
-    		if ('visibleCard' in $$props) $$invalidate(5, visibleCard = $$props.visibleCard);
-    		if ('transitionMultiplier' in $$props) $$invalidate(6, transitionMultiplier = $$props.transitionMultiplier);
+    		if ('visibleCard' in $$props) $$invalidate(6, visibleCard = $$props.visibleCard);
+    		if ('transitionMultiplier' in $$props) $$invalidate(7, transitionMultiplier = $$props.transitionMultiplier);
     		if ('disabled' in $$props) disabled = $$props.disabled;
     	};
 
@@ -18778,8 +19076,8 @@ var app = (function () {
     			$$invalidate(2, currentUserChoice = userChoices[currentUserChoiceIdx]);
     		}
 
-    		if ($$self.$$.dirty & /*currentUserChoice, guideData*/ 516) {
-    			$$invalidate(3, currentGuideStep = currentUserChoice && currentUserChoice.stepKey
+    		if ($$self.$$.dirty & /*currentUserChoice, guideData*/ 2052) {
+    			$$invalidate(4, currentGuideStep = currentUserChoice && currentUserChoice.stepKey
     			? guideData[currentUserChoice.stepKey]
     			: undefined);
     		}
@@ -18789,10 +19087,12 @@ var app = (function () {
     		currentUserChoiceIdx,
     		userChoices,
     		currentUserChoice,
+    		sendVia,
     		currentGuideStep,
     		selected,
     		visibleCard,
     		transitionMultiplier,
+    		sendViaChoice,
     		handleClickChoice,
     		handleClickBreadcrumb,
     		guideData,
@@ -18800,14 +19100,16 @@ var app = (function () {
     		click_handler,
     		click_handler_1,
     		segmentedbutton_selected_binding,
-    		click_handler_2
+    		click_handler_2,
+    		click_handler_3,
+    		segmentedbutton_selected_binding_1
     	];
     }
 
     class Guide extends SvelteComponentDev {
     	constructor(options) {
     		super(options);
-    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { guideData: 9, startingStepKey: 10 });
+    		init(this, options, instance$1, create_fragment$1, safe_not_equal, { guideData: 11, startingStepKey: 12 });
 
     		dispatch_dev("SvelteRegisterComponent", {
     			component: this,
@@ -18819,11 +19121,11 @@ var app = (function () {
     		const { ctx } = this.$$;
     		const props = options.props || {};
 
-    		if (/*guideData*/ ctx[9] === undefined && !('guideData' in props)) {
+    		if (/*guideData*/ ctx[11] === undefined && !('guideData' in props)) {
     			console.warn("<Guide> was created without expected prop 'guideData'");
     		}
 
-    		if (/*startingStepKey*/ ctx[10] === undefined && !('startingStepKey' in props)) {
+    		if (/*startingStepKey*/ ctx[12] === undefined && !('startingStepKey' in props)) {
     			console.warn("<Guide> was created without expected prop 'startingStepKey'");
     		}
     	}
