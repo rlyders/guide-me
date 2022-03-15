@@ -1,0 +1,983 @@
+{
+    "version": 3,
+    "deployment": {
+        "manifest": {
+            "time": "2022-03-15T05:43:51.8760307-05:00",
+            "magic": "3941cd8d8f96d38ddb61c5e4d852cb2b8f303c21d4cb1800bbf01ef47779cdfa",
+            "version": "v3.26.1"
+        },
+        "secrets_providers": {
+            "type": "service",
+            "state": {
+                "url": "https://api.pulumi.com",
+                "owner": "rlyders",
+                "project": "guide-me",
+                "stack": "dev"
+            }
+        },
+        "resources": [
+            {
+                "urn": "urn:pulumi:dev::guide-me::pulumi:pulumi:Stack::guide-me-dev",
+                "custom": false,
+                "type": "pulumi:pulumi:Stack",
+                "outputs": {
+                    "s3GuidesBucket": "guide-me-guides-6232b0f",
+                    "websiteUrl": "guide-me-7c9da1b.s3-website-us-east-1.amazonaws.com"
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Website::guide-me",
+                "custom": false,
+                "type": "lyders:S3Website",
+                "outputs": {
+                    "bucketName": "guide-me-7c9da1b",
+                    "websiteUrl": "guide-me-7c9da1b.s3-website-us-east-1.amazonaws.com"
+                },
+                "parent": "urn:pulumi:dev::guide-me::pulumi:pulumi:Stack::guide-me-dev",
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Folder::guide-me-guides",
+                "custom": false,
+                "type": "lyders:S3Folder",
+                "outputs": {
+                    "bucketName": "guide-me-guides-6232b0f"
+                },
+                "parent": "urn:pulumi:dev::guide-me::pulumi:pulumi:Stack::guide-me-dev",
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1",
+                "custom": true,
+                "id": "846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "type": "pulumi:providers:aws",
+                "inputs": {
+                    "region": "us-east-1",
+                    "version": "4.38.1"
+                },
+                "outputs": {
+                    "region": "us-east-1",
+                    "version": "4.38.1"
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides",
+                "custom": true,
+                "id": "guide-me-guides-6232b0f",
+                "type": "aws:s3/bucket:Bucket",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "bucket",
+                        "forceDestroy"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "forceDestroy": false
+                },
+                "outputs": {
+                    "accelerationStatus": "",
+                    "acl": "private",
+                    "arn": "arn:aws:s3:::guide-me-guides-6232b0f",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "bucketDomainName": "guide-me-guides-6232b0f.s3.amazonaws.com",
+                    "bucketRegionalDomainName": "guide-me-guides-6232b0f.s3.amazonaws.com",
+                    "corsRules": [],
+                    "forceDestroy": false,
+                    "grants": [],
+                    "hostedZoneId": "Z3AQBSTGFYJSTF",
+                    "id": "guide-me-guides-6232b0f",
+                    "lifecycleRules": [],
+                    "loggings": [],
+                    "objectLockConfiguration": null,
+                    "region": "us-east-1",
+                    "replicationConfiguration": null,
+                    "requestPayer": "BucketOwner",
+                    "serverSideEncryptionConfiguration": null,
+                    "tags": {},
+                    "tagsAll": {},
+                    "versioning": {
+                        "enabled": false,
+                        "mfaDelete": false
+                    },
+                    "website": null
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Folder::guide-me-guides",
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me",
+                "custom": true,
+                "id": "guide-me-7c9da1b",
+                "type": "aws:s3/bucket:Bucket",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "bucket",
+                        "forceDestroy"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "forceDestroy": false,
+                    "website": {
+                        "__defaults": [],
+                        "indexDocument": "index.html"
+                    }
+                },
+                "outputs": {
+                    "accelerationStatus": "",
+                    "acl": "private",
+                    "arn": "arn:aws:s3:::guide-me-7c9da1b",
+                    "bucket": "guide-me-7c9da1b",
+                    "bucketDomainName": "guide-me-7c9da1b.s3.amazonaws.com",
+                    "bucketRegionalDomainName": "guide-me-7c9da1b.s3.amazonaws.com",
+                    "corsRules": [],
+                    "forceDestroy": false,
+                    "grants": [],
+                    "hostedZoneId": "Z3AQBSTGFYJSTF",
+                    "id": "guide-me-7c9da1b",
+                    "lifecycleRules": [],
+                    "loggings": [],
+                    "objectLockConfiguration": null,
+                    "region": "us-east-1",
+                    "replicationConfiguration": null,
+                    "requestPayer": "BucketOwner",
+                    "serverSideEncryptionConfiguration": null,
+                    "tags": {},
+                    "tagsAll": {},
+                    "versioning": {
+                        "enabled": false,
+                        "mfaDelete": false
+                    },
+                    "website": {
+                        "errorDocument": "",
+                        "indexDocument": "index.html",
+                        "redirectAllRequestsTo": "",
+                        "routingRules": ""
+                    },
+                    "websiteDomain": "s3-website-us-east-1.amazonaws.com",
+                    "websiteEndpoint": "guide-me-7c9da1b.s3-website-us-east-1.amazonaws.com"
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Website::guide-me",
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "website": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucketPolicy:BucketPolicy::bucketPolicy",
+                "custom": true,
+                "id": "guide-me-7c9da1b",
+                "type": "aws:s3/bucketPolicy:BucketPolicy",
+                "inputs": {
+                    "__defaults": [],
+                    "bucket": "guide-me-7c9da1b",
+                    "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":\"*\",\"Action\":[\"s3:GetObject\"],\"Resource\":[\"arn:aws:s3:::guide-me-7c9da1b/*\"]}]}"
+                },
+                "outputs": {
+                    "bucket": "guide-me-7c9da1b",
+                    "id": "guide-me-7c9da1b",
+                    "policy": "{\"Version\":\"2012-10-17\",\"Statement\":[{\"Effect\":\"Allow\",\"Principal\":\"*\",\"Action\":[\"s3:GetObject\"],\"Resource\":[\"arn:aws:s3:::guide-me-7c9da1b/*\"]}]}"
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Website::guide-me",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                    ],
+                    "policy": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                    ]
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucketObject:BucketObject::turn-on-lights.yaml",
+                "custom": true,
+                "id": "turn-on-lights.yaml",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "contentType": "text/yaml",
+                    "forceDestroy": false,
+                    "key": "turn-on-lights.yaml",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "14eaa10dfd8e1a3f6965b0ef77f77f445d4cbc8da26ccdb2292c23e2976e722f",
+                        "path": "..\\src\\data\\guides\\turn-on-lights.yaml"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/yaml",
+                    "etag": "e716433b5c41bc8305cd9623339d62db",
+                    "forceDestroy": false,
+                    "id": "turn-on-lights.yaml",
+                    "key": "turn-on-lights.yaml",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "14eaa10dfd8e1a3f6965b0ef77f77f445d4cbc8da26ccdb2292c23e2976e722f",
+                        "path": "..\\src\\data\\guides\\turn-on-lights.yaml"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Folder::guide-me-guides",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucketObject:BucketObject::ab.yaml",
+                "custom": true,
+                "id": "ab.yaml",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "contentType": "text/yaml",
+                    "forceDestroy": false,
+                    "key": "ab.yaml",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "1474ec5b2fb39cbf5f979a754851c77b1b86d841acf85e76b6e45edcc226f0f6",
+                        "path": "..\\src\\data\\guides\\ab.yaml"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/yaml",
+                    "etag": "de28eda7bebd436de799bdb9bdbc0541",
+                    "forceDestroy": false,
+                    "id": "ab.yaml",
+                    "key": "ab.yaml",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "1474ec5b2fb39cbf5f979a754851c77b1b86d841acf85e76b6e45edcc226f0f6",
+                        "path": "..\\src\\data\\guides\\ab.yaml"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Folder::guide-me-guides",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucketObject:BucketObject::abcdefg.yaml",
+                "custom": true,
+                "id": "abcdefg.yaml",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "contentType": "text/yaml",
+                    "forceDestroy": false,
+                    "key": "abcdefg.yaml",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "615cfa18f3d552628094a1d5f06492929c881113b97f86612a1d0445dc785923",
+                        "path": "..\\src\\data\\guides\\abcdefg.yaml"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/yaml",
+                    "etag": "e0dd051997a139194a7f4f844aa93e35",
+                    "forceDestroy": false,
+                    "id": "abcdefg.yaml",
+                    "key": "abcdefg.yaml",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "615cfa18f3d552628094a1d5f06492929c881113b97f86612a1d0445dc785923",
+                        "path": "..\\src\\data\\guides\\abcdefg.yaml"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Folder::guide-me-guides",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucketObject:BucketObject::customer-feedback.yaml",
+                "custom": true,
+                "id": "customer-feedback.yaml",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "contentType": "text/yaml",
+                    "forceDestroy": false,
+                    "key": "customer-feedback.yaml",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "646a0d0e536b8351c1c8cb664e137070e639c4fbb289d1f98192a599699f1f74",
+                        "path": "..\\src\\data\\guides\\customer-feedback.yaml"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/yaml",
+                    "etag": "d783c3309a22110a06ba2c35758d9cbf",
+                    "forceDestroy": false,
+                    "id": "customer-feedback.yaml",
+                    "key": "customer-feedback.yaml",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "646a0d0e536b8351c1c8cb664e137070e639c4fbb289d1f98192a599699f1f74",
+                        "path": "..\\src\\data\\guides\\customer-feedback.yaml"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Folder::guide-me-guides",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucketObject:BucketObject::abc.yaml",
+                "custom": true,
+                "id": "abc.yaml",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "contentType": "text/yaml",
+                    "forceDestroy": false,
+                    "key": "abc.yaml",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "c16962a06209fd24e423d8cb055171a3f28865034da4c88623f96854c35fb2df",
+                        "path": "..\\src\\data\\guides\\abc.yaml"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-guides-6232b0f",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/yaml",
+                    "etag": "7572f88895a8f01af7d93e19c8e6bbf6",
+                    "forceDestroy": false,
+                    "id": "abc.yaml",
+                    "key": "abc.yaml",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "c16962a06209fd24e423d8cb055171a3f28865034da4c88623f96854c35fb2df",
+                        "path": "..\\src\\data\\guides\\abc.yaml"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Folder::guide-me-guides",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Folder$aws:s3/bucket:Bucket::guide-me-guides"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucketObject:BucketObject::build/bundle.css",
+                "custom": true,
+                "id": "build/bundle.css",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "contentType": "text/css",
+                    "forceDestroy": false,
+                    "key": "build/bundle.css",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "205fc017c22ee785e6bda1aa4c672dad129e327ae2906631ee5157eb5534936d",
+                        "path": "..\\public\\build\\bundle.css"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/css",
+                    "etag": "8d5bfc2e429e5ab24a1052e6a25d174c",
+                    "forceDestroy": false,
+                    "id": "build/bundle.css",
+                    "key": "build/bundle.css",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "205fc017c22ee785e6bda1aa4c672dad129e327ae2906631ee5157eb5534936d",
+                        "path": "..\\public\\build\\bundle.css"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Website::guide-me",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucketObject:BucketObject::global.css",
+                "custom": true,
+                "id": "global.css",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "contentType": "text/css",
+                    "forceDestroy": false,
+                    "key": "global.css",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "a7265818a484fec0b1702e324610f7f4eb2418ef30f35118b4f575970fc77ae7",
+                        "path": "..\\public\\global.css"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/css",
+                    "etag": "a683aa52e7fe5b37bb2c54a8551bf16e",
+                    "forceDestroy": false,
+                    "id": "global.css",
+                    "key": "global.css",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "a7265818a484fec0b1702e324610f7f4eb2418ef30f35118b4f575970fc77ae7",
+                        "path": "..\\public\\global.css"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Website::guide-me",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucketObject:BucketObject::build/bundle.js",
+                "custom": true,
+                "id": "build/bundle.js",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "contentType": "application/javascript",
+                    "forceDestroy": false,
+                    "key": "build/bundle.js",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "97cd1c64c7649997ed63635bf686a3a49d51a4f53ecb3becb101bf191f679190",
+                        "path": "..\\public\\build\\bundle.js"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "application/javascript",
+                    "etag": "43b162428d565bd2774526df3a0627a1",
+                    "forceDestroy": false,
+                    "id": "build/bundle.js",
+                    "key": "build/bundle.js",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "97cd1c64c7649997ed63635bf686a3a49d51a4f53ecb3becb101bf191f679190",
+                        "path": "..\\public\\build\\bundle.js"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Website::guide-me",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucketObject:BucketObject::index.html",
+                "custom": true,
+                "id": "index.html",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "contentType": "text/html",
+                    "forceDestroy": false,
+                    "key": "index.html",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "10ab96e48328fbd796cdafa316240466e9f27f59ee548e9d4cd1b1fdf143a70d",
+                        "path": "..\\public\\index.html"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/html",
+                    "etag": "d229cb1ff7f227791034d84d1931016f",
+                    "forceDestroy": false,
+                    "id": "index.html",
+                    "key": "index.html",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "10ab96e48328fbd796cdafa316240466e9f27f59ee548e9d4cd1b1fdf143a70d",
+                        "path": "..\\public\\index.html"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Website::guide-me",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucketObject:BucketObject::build/bundle.js.map",
+                "custom": true,
+                "id": "build/bundle.js.map",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "contentType": "application/json",
+                    "forceDestroy": false,
+                    "key": "build/bundle.js.map",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "547e76bcc9e05c31c4c53f5c242a968d45c352c6fbb4abb4c3227f12377bb0f6",
+                        "path": "..\\public\\build\\bundle.js.map"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "application/json",
+                    "etag": "4c27275e6260dba48a37ee8323112611",
+                    "forceDestroy": false,
+                    "id": "build/bundle.js.map",
+                    "key": "build/bundle.js.map",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "547e76bcc9e05c31c4c53f5c242a968d45c352c6fbb4abb4c3227f12377bb0f6",
+                        "path": "..\\public\\build\\bundle.js.map"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Website::guide-me",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucketObject:BucketObject::smui.css",
+                "custom": true,
+                "id": "smui.css",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "contentType": "text/css",
+                    "forceDestroy": false,
+                    "key": "smui.css",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "efa99203470162edde16934a02ca7d50804ed2784656f1270acbd21ee1a48ba3",
+                        "path": "..\\public\\smui.css"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "text/css",
+                    "etag": "ce9abdd1328be612b99b8095ae36c57d",
+                    "forceDestroy": false,
+                    "id": "smui.css",
+                    "key": "smui.css",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "efa99203470162edde16934a02ca7d50804ed2784656f1270acbd21ee1a48ba3",
+                        "path": "..\\public\\smui.css"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Website::guide-me",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            },
+            {
+                "urn": "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucketObject:BucketObject::favicon.png",
+                "custom": true,
+                "id": "favicon.png",
+                "type": "aws:s3/bucketObject:BucketObject",
+                "inputs": {
+                    "__defaults": [
+                        "acl",
+                        "forceDestroy",
+                        "key"
+                    ],
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "contentType": "image/png",
+                    "forceDestroy": false,
+                    "key": "favicon.png",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "ef0c553e022beb92c1310878521bd7c2a425084c3a04f649b3cbaacb76ad7170",
+                        "path": "..\\public\\favicon.png"
+                    }
+                },
+                "outputs": {
+                    "acl": "private",
+                    "bucket": "guide-me-7c9da1b",
+                    "bucketKeyEnabled": false,
+                    "cacheControl": "",
+                    "contentDisposition": "",
+                    "contentEncoding": "",
+                    "contentLanguage": "",
+                    "contentType": "image/png",
+                    "etag": "3c3dd7f8ea32ff5df18de7fad4eff474",
+                    "forceDestroy": false,
+                    "id": "favicon.png",
+                    "key": "favicon.png",
+                    "metadata": {},
+                    "objectLockLegalHoldStatus": "",
+                    "objectLockMode": "",
+                    "objectLockRetainUntilDate": "",
+                    "serverSideEncryption": "",
+                    "source": {
+                        "4dabf18193072939515e22adb298388d": "c44067f5952c0a294b673a41bacd8c17",
+                        "hash": "ef0c553e022beb92c1310878521bd7c2a425084c3a04f649b3cbaacb76ad7170",
+                        "path": "..\\public\\favicon.png"
+                    },
+                    "storageClass": "STANDARD",
+                    "tags": {},
+                    "tagsAll": {},
+                    "versionId": "",
+                    "websiteRedirect": ""
+                },
+                "parent": "urn:pulumi:dev::guide-me::lyders:S3Website::guide-me",
+                "dependencies": [
+                    "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                ],
+                "provider": "urn:pulumi:dev::guide-me::pulumi:providers:aws::default_4_38_1::846bac15-c08c-47b0-ad9f-99a1d9436190",
+                "propertyDependencies": {
+                    "bucket": [
+                        "urn:pulumi:dev::guide-me::lyders:S3Website$aws:s3/bucket:Bucket::guide-me"
+                    ],
+                    "contentType": null,
+                    "source": null
+                },
+                "sequenceNumber": 1
+            }
+        ]
+    }
+}
