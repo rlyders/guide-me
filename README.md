@@ -94,7 +94,7 @@ You can run the newly built app with `npm run start`. This uses [sirv](https://g
 #### Deploy to AWS S3 via AWS Console
 Upload contents of this project's `./public` directory to `https://s3.console.aws.amazon.com/s3/buckets/guide-me?region=us-east-1&tab=objects`
 
-#### Deploy to AWS S3 vis Pulumi
+#### Deploy to AWS S3 via Pulumi
 *PREREQUISITE*: Install Pulumi and AWS CLI: https://www.pulumi.com/docs/get-started/aws/begin/
 
 Deploy to AWS S3 via Pulumi:
