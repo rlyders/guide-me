@@ -4,14 +4,14 @@ export class LambdaApi {
 
     api: awsx.apigateway.API;
 
-    constructor(apiName: string) {
+    constructor(apiName: string, sourcePath: string) {
         // Create a public HTTP endpoint (using AWS APIGateway)
         this.api = new awsx.apigateway.API(apiName, {
             routes: [
-                // Serve static files from the `www` folder (using AWS S3)
+                // Serve static files from the `sourcePath` folder (using AWS S3)
                 {
                     path: "/",
-                    localPath: "../public",
+                    localPath: sourcePath,
                 },
 
                 // Serve a simple REST API on `GET /name` (using AWS Lambda)
