@@ -45,7 +45,6 @@ export class S3Folder extends pulumi.ComponentResource {
     uploadPathToBucket(s3Bucket: aws.s3.Bucket, sourcePath: string, targetFilePrefix = "") {
         // For each file in the directory, create an S3 object stored in s3Bucket
         for (let dirEnt of fs.readdirSync(sourcePath, { withFileTypes: true })) {
-            console.log(`targetFilePrefix: ${targetFilePrefix}`);
             let sourceFilePath = path.join(sourcePath, dirEnt.name);
             let targetPath = [targetFilePrefix,dirEnt.name].filter(n => n).join('/');
             if (dirEnt.isDirectory()) {
