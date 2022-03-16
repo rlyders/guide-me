@@ -3,13 +3,11 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 
-// import { LambdaApi } from "./LambdaApi";
-// import { S3Client, GetObjectCommand, ListObjectsCommand, ListObjectsCommandOutput, GetObjectCommandOutput } from "@aws-sdk/client-s3"
-// import { Readable } from 'stream';
-
 const STACK = pulumi.getStack();
 
 const GUIDES_BUCKET_NAME = "guide-me-guides";
+const NODE_VER_X = "nodejs14.x";
+
 // Create an instance of the S3Folder component
 let s3GuidesFolder = new S3Folder(GUIDES_BUCKET_NAME, {
     bucket: `${GUIDES_BUCKET_NAME}-${STACK}`
@@ -53,6 +51,60 @@ new aws.iam.RolePolicyAttachment(`post-to-s3-policy-attachment`, {
     role: lambdaRole.name
 })
 
+//from: https://medium.com/@adamboazbecker/guide-to-connecting-aws-lambda-to-s3-with-pulumi-15393df8bac7
+const guidesLambdaRole = new aws.iam.Role(`role-guides-api`, {
+    assumeRolePolicy: `{
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Action": "sts:AssumeRole",
+         "Principal": {
+           "Service": "lambda.amazonaws.com"
+         },
+         "Effect": "Allow"
+       }
+     ]
+   }
+   `,
+})
+
+// Policy for allowing reading Guides in S3 bucket
+const guidesS3ReadPolicy = new aws.iam.Policy(`guides-s3-read-policy`, {
+    description: "IAM policy for reading Guides in S3 bucket",
+    path: "/",
+    policy: s3GuidesFolder.s3Bucket.arn.apply(bucketArn => `{
+     "Version": "2012-10-17",
+     "Statement": [
+      {
+        "Action": "s3:ListBucket",
+        "Resource": "${bucketArn}",
+        "Effect": "Allow"
+      },
+      {
+         "Action": "s3:GetObject",
+         "Resource": "${bucketArn}/*",
+         "Effect": "Allow"
+       },
+       {
+          "Action": "s3:PutObject",
+          "Resource": "${bucketArn}/guide-me-guides.json",
+          "Effect": "Allow"
+        }
+     ]}`)
+})
+
+// Attach the policies to the Lambda Guides role
+new aws.iam.RolePolicyAttachment(`lambda-guides-s3-policy-attachment`, {
+    policyArn: guidesS3ReadPolicy.arn,
+    role: guidesLambdaRole.name
+})
+
+// Attach the policies to the Lambda Guides role
+new aws.iam.RolePolicyAttachment(`lambda-guides-s3-policy-attachment-cloudWatch`, {
+    policyArn: 'arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole',
+    role: guidesLambdaRole.name
+})
+
 const lambdaFunction = async (event: any) => {
     const AWS = require('aws-sdk')
     const s3 = new AWS.S3()
@@ -80,11 +132,134 @@ const lambdaFunction = async (event: any) => {
     }
 }
 
-const lambda = new aws.lambda.CallbackFunction(`payloads-api-meetup-lambda`, {
+const lambdaPostToS3 = new aws.lambda.CallbackFunction(`payloads-api-meetup-lambda`, {
     name: `payloads-api-meetup-lambda-${STACK}`,
-    runtime: "nodejs14.x",
+    runtime: NODE_VER_X,
     role: lambdaRole,
     callback: lambdaFunction,
+    environment: {
+        variables: {
+            S3_BUCKET: s3GuidesFolder.s3Bucket.id
+        }
+    },
+})
+
+//from: https://stackoverflow.com/a/63081760
+export async function s3GetObjectList(
+    s3client: AWS.S3,
+    bucket: string,
+    prefix: string,
+): Promise<AWS.S3.ObjectList> {
+    let token: string | undefined = undefined;
+    let objectList: AWS.S3.ObjectList = [];
+    do {
+        const res: any = await s3client
+            .listObjectsV2({
+                Prefix: prefix,
+                Bucket: bucket,
+                ContinuationToken: token,
+            })
+            .promise();
+        token = res.NextContinuationToken;
+        objectList = objectList.concat(res.Contents);
+    } while (token !== undefined);
+    return objectList;
+}
+
+interface GuideHeader {
+    key: string;
+    title: string;
+}
+
+const lambdaGuideTitlesFunction = async (event: any) => {
+    console.log("lambdaGuideTitlesFunction: event=" + JSON.stringify(event));
+    const AWS = require('aws-sdk')
+    const YAML = require('yamljs');
+    const s3 = new AWS.S3()
+    let guideHeaderList: GuideHeader[] = [];
+
+    let recreateGuideMeGuideList = containsYamlChangedRecord(event) || containsGuideMeGuidesDeletedRecord(event);
+
+    if (process.env.S3_BUCKET) {
+        const s3ObjectList: AWS.S3.ObjectList = await s3GetObjectList(s3, process.env.S3_BUCKET, "");
+        if (s3ObjectList && s3ObjectList.length > 0) {
+            const guideMeGuidesList = s3ObjectList.filter(obj => obj.Key && isGuideMeGuideJsonFileName(obj.Key));
+            const guideMeGuidesAttrs = guideMeGuidesList && guideMeGuidesList.length > 0 && guideMeGuidesList[0] ? guideMeGuidesList[0] : null;
+            const guideMeGuidesLastModified = guideMeGuidesAttrs ? guideMeGuidesAttrs.LastModified : null;
+            const yamlObjectList = s3ObjectList.filter(o => o.Key && isYamlFileName(o.Key));
+            const yamlObjectsLastModified = new Date(Math.min(...(yamlObjectList.map(o => o.LastModified?.getTime() || 0))));
+            recreateGuideMeGuideList = recreateGuideMeGuideList
+                || !guideMeGuidesLastModified
+                || ((yamlObjectsLastModified || guideMeGuidesLastModified) > guideMeGuidesLastModified)
+                || (yamlObjectList.length == 0 && (guideMeGuidesAttrs?.Size || 0) > 2);
+
+            if (recreateGuideMeGuideList) {
+                const yamlObjectIdList = yamlObjectList.map(o => o.Key);
+                for (const idx in yamlObjectIdList) {
+                    const s3ObjectKey = yamlObjectIdList[idx];
+                    if (s3ObjectKey) {
+                        const s3GetObjectData = await s3.getObject({ Bucket: process.env.S3_BUCKET, Key: s3ObjectKey }).promise();
+                        if (s3GetObjectData && s3GetObjectData.Body) {
+                            const guideContentsStr = s3GetObjectData.Body.toString('utf-8');
+                            if (guideContentsStr) {
+                                try {
+                                    const guideContentsObj = YAML.parse(guideContentsStr);
+                                    if (guideContentsObj && guideContentsObj.title) {
+                                        guideHeaderList.push({ key: s3ObjectKey, title: guideContentsObj.title });
+                                    }
+
+                                } catch (err) {
+                                    console.log("guideContentsStr: " + guideContentsStr);
+                                    console.log("Failed to convert string to JSON: " + err);
+                                }
+                            }
+                        }
+                    }
+                }
+                console.log("saving new guide-me-guides.json...");
+                const putParams = {
+                    Bucket: process.env.S3_BUCKET, // We'll read the .env variable
+                    Key: `guide-me-guides.json`, // We'll use the timestamp
+                    Body: JSON.stringify(guideHeaderList)
+                }
+
+                await new Promise((resolve, reject) => {
+                    s3.putObject(putParams, function (err: any, data: any) {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve(data)
+                        }
+                    })
+                })
+            } else {
+                console.log("get existing guide-me-guides.json...");
+                const guideMeGuidesObject = await s3.getObject({ Bucket: process.env.S3_BUCKET, Key: 'guide-me-guides.json' }).promise();
+                if (guideMeGuidesObject && guideMeGuidesObject.Body) {
+                    const guideMeGuidesContentsStr = guideMeGuidesObject.Body.toString('utf-8');
+                    if (guideMeGuidesContentsStr) {
+                        try {
+                            guideHeaderList = JSON.parse(guideMeGuidesContentsStr);
+                        } catch (err) {
+                            console.log("guideMeGuidesContentsStr: " + guideMeGuidesContentsStr);
+                            console.log("Failed to convert string to JSON: " + err);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return {
+        statusCode: 200,
+        body: JSON.stringify(guideHeaderList)
+    }
+}
+
+const lambdaGetGuideNames = new aws.lambda.CallbackFunction(`get-guide-names-lambda`, {
+    name: `get-guide-names-lambda-${STACK}`,
+    runtime: NODE_VER_X,
+    role: guidesLambdaRole,
+    callback: lambdaGuideTitlesFunction,
     environment: {
         variables: {
             S3_BUCKET: s3GuidesFolder.s3Bucket.id
@@ -98,18 +273,40 @@ let apiGateway = new awsx.apigateway.API(`payloads-api-meetup-api-gateway`, {
         {
             path: "/post_to_s3",
             method: "POST",
-            eventHandler: lambda
+            eventHandler: lambdaPostToS3
+        },
+        {
+            path: "/get-guide-names",
+            method: "GET",
+            eventHandler: lambdaGetGuideNames
         }
     ]
 })
 
-// const lambdaHandlers: any[] = [];
-// lambdaHandlers.push({
-//     path: "/guide-names",
-//     method: "GET",
-//     eventHandler: new pulumi.asset.FileArchive("./folder")
-// });
-// let lambdaApi = new LambdaApi("guide-me", "../public", "/", lambdaHandlers);
+function containsGuideMeGuidesDeletedRecord(event: any) {
+    return event?.Records?.filter((r: any) => {
+        return isEventObjectRemoved(r) && isGuideMeGuideJsonFileName(r?.s3?.object?.key);
+    }).length > 0;
+}
+
+function isEventObjectRemoved(r: any) {
+    return r?.eventName == 'ObjectRemoved:Delete';
+}
+
+function isGuideMeGuideJsonFileName(fileName: string) {
+    return /^guide-me-guides\.json$/i.test(fileName);
+}
+
+function containsYamlChangedRecord(event: any) {
+    return event?.Records?.filter((r: any) => isYamlFileName(r?.s3?.object?.key)).length > 0;
+}
+
+function isYamlFileName(fileName: string) {
+    return /(^.*\.yaml$)/i.test(fileName);
+}
+
+s3GuidesFolder.s3Bucket.onObjectCreated("guideCreatedHandler", lambdaGetGuideNames);
+s3GuidesFolder.s3Bucket.onObjectRemoved("guideDeletedHandler", lambdaGetGuideNames);
 
 // Export output property of `s3GuidesFolder` as a stack output
 exports.s3GuidesBucket = s3GuidesFolder.s3Bucket.id;
