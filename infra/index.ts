@@ -455,6 +455,12 @@ function isYamlFileName(fileName: string) {
 s3GuidesFolder.s3Bucket.onObjectCreated("guideCreatedHandler", lambdaGetGuideNames);
 s3GuidesFolder.s3Bucket.onObjectRemoved("guideDeletedHandler", lambdaGetGuideNames);
 
+import { S3WebSite } from "./S3WebSite";
+const s3WebSite = new S3WebSite("guide-me", {bucket: "guide-me"}, "../public");
+
+// Export output property of `s3WebSite` as a stack output
+exports.websiteUrl = s3WebSite.websiteUrl;
+
 // Export output property of `s3GuidesFolder` as a stack output
 exports.s3GuidesBucket = s3GuidesFolder.s3Bucket.id;
 exports.apiGateway = apiGateway.url
