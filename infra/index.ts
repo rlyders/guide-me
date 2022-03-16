@@ -267,18 +267,165 @@ const lambdaGetGuideNames = new aws.lambda.CallbackFunction(`get-guide-names-lam
     },
 })
 
+// Create an AWS Cognito User Pool
+const cognitoUserPool = new aws.cognito.UserPool("guide-me-cognito-user-pool", {autoVerifiedAttributes: ["email"]});
+
+const userPoolClient = new aws.cognito.UserPoolClient("userPoolClient", {
+    allowedOauthFlows: ["code"],
+    allowedOauthFlowsUserPoolClient: true,
+    allowedOauthScopes: ["phone", "email", "openid", "profile", "aws.cognito.signin.user.admin"],
+    callbackUrls: ["http://localhost:3000", "https://product.app"],
+    defaultRedirectUri: "https://product.app",
+    generateSecret: false,
+    logoutUrls: ["http://localhost:3000", "https://product.app"],
+    supportedIdentityProviders: ["COGNITO", "Google"], // , "Facebook"
+    userPoolId: cognitoUserPool.id,
+});
+
+const userPoolDomain = new aws.cognito.UserPoolDomain("guide-me-userPoolDomain", {
+    domain: "lyders-guide-me",
+    userPoolId: cognitoUserPool.id,
+});
+
+const cognitoUserPoolProvider = new aws.cognito.IdentityProvider("guide-me-cognito-user-provider", {
+    userPoolId: cognitoUserPool.id,
+    providerName: "Google",
+    providerType: "Google",
+    providerDetails: {
+        authorize_scopes: "profile email openid",
+        client_id: "141202488786-q92quaf81a7hv4t1n05s90cu9kkrgol8.apps.googleusercontent.com",
+        client_secret: "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",
+    },
+    attributeMapping: {
+        email: "email",
+        username: "sub",
+    },
+});
+
+// from: https://github.com/pulumi/pulumi-aws/issues/679
+const identityPool = new aws.cognito.IdentityPool("identityPool", {
+    allowUnauthenticatedIdentities: true,
+    cognitoIdentityProviders: cognitoUserPool.endpoint.apply(endpoint => [{
+            client_id: userPoolClient.id,
+            providerName: endpoint,
+            serverSideTokenCheck: true,
+        }]
+    ),
+    identityPoolName: "identityPool",
+});
+
+//from: https://github.com/pulumi/pulumi-aws/issues/679
+const identityPoolAuthenticatedRole = new aws.iam.Role("identityPoolAuthenticatedRole", {
+    assumeRolePolicy: identityPool.id.apply(id => JSON.stringify({
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {
+                    "Federated": "cognito-identity.amazonaws.com"
+                },
+                "Action": "sts:AssumeRoleWithWebIdentity",
+                "Condition": {
+                    "StringEquals": {
+                        "cognito-identity.amazonaws.com:aud": id
+                    },
+                    "ForAnyValue:StringLike": {
+                        "cognito-identity.amazonaws.com:amr": "authenticated"
+                    }
+                }
+            }
+        ]
+    })),
+});
+
+const identityPoolAuthenticatedRolePolicy = new aws.iam.RolePolicy("identityPoolAuthenticatedRolePolicy", {
+    policy: JSON.stringify({
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "mobileanalytics:PutEvents",
+                    "cognito-sync:*",
+                    "cognito-identity:*"
+                ],
+                "Resource": [
+                    "*"
+                ]
+            }
+        ]
+    }),
+    role: identityPoolAuthenticatedRole.id,
+});
+
+const identityPoolUnauthenticatedRole = new aws.iam.Role("identityPoolUnauthenticatedRole", {
+    assumeRolePolicy: identityPool.id.apply(id => JSON.stringify({
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Principal": {
+                    "Federated": "cognito-identity.amazonaws.com"
+                },
+                "Action": "sts:AssumeRoleWithWebIdentity",
+                "Condition": {
+                    "StringEquals": {
+                        "cognito-identity.amazonaws.com:aud": id
+                    },
+                    "ForAnyValue:StringLike": {
+                        "cognito-identity.amazonaws.com:amr": "unauthenticated"
+                    }
+                }
+            }
+        ]
+    })),
+});
+
+const identityPoolUnauthenticatedRolePolicy = new aws.iam.RolePolicy("identityPoolUnauthenticatedRolePolicy", {
+    policy: JSON.stringify({
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "mobileanalytics:PutEvents",
+                    "cognito-sync:*",
+                ],
+                "Resource": [
+                    "*"
+                ]
+            }
+        ]
+    }),
+    role: identityPoolUnauthenticatedRole.id,
+});
+
+const identityPoolRoleAttachment = new aws.cognito.IdentityPoolRoleAttachment("identityPoolRoleAttachment", {
+    identityPoolId: identityPool.id,
+    roles: {
+        authenticated: identityPoolAuthenticatedRole.arn,
+        unauthenticated: identityPoolUnauthenticatedRole.arn,
+    },
+});
+
 // create API
 let apiGateway = new awsx.apigateway.API(`payloads-api-meetup-api-gateway`, {
     routes: [
         {
             path: "/post_to_s3",
             method: "POST",
-            eventHandler: lambdaPostToS3
+            eventHandler: lambdaPostToS3,
+            authorizers: [awsx.apigateway.getCognitoAuthorizer({
+                providerARNs: [cognitoUserPool],
+            })],
         },
         {
             path: "/get-guide-names",
             method: "GET",
-            eventHandler: lambdaGetGuideNames
+            eventHandler: lambdaGetGuideNames,
+            authorizers: [awsx.apigateway.getCognitoAuthorizer({
+                providerARNs: [cognitoUserPool],
+            })],
         }
     ]
 })
