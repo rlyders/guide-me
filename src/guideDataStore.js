@@ -1,8 +1,14 @@
 import { readable } from 'svelte/store';
-import customerFeedbackGuideData from "./data/guides/customer-feedback.yaml";
-import turnOnLightsGuideData from './data/guides/turn-on-lights.yaml';
 
-export const guideData = readable(undefined, (set) => {
-    set([customerFeedbackGuideData, turnOnLightsGuideData]);
-    return () => {console.log('guideData.stop');}
+export const guideList = readable(undefined, (set) => {
+    fetch('https://5f86tjn30m.execute-api.us-east-1.amazonaws.com/stage/get-guide-list')
+    .then(response => response.json())
+    .then(data => {
+        console.log('get-guide-list: '+JSON.stringify(data, null, 2));
+        set(data);
+    }).catch(error => {
+      console.log(error);
+      set([]);
+    });
+    return () => {console.log('guideList.stop');}
 })

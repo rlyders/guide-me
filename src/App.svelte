@@ -13,7 +13,7 @@
 
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { guideData } from "./guideDataStore.js";
+	import { guideList } from "./guideDataStore.js";
 
 	import TopAppBar, { Row, Section, Title } from "@smui/top-app-bar";
 	import IconButton from "@smui/icon-button";
@@ -34,22 +34,36 @@
 	let dense = false;
 	let secondaryColor = false;
 
-	let currentGuideIdx = 0;
-	let startingStepKey = "which";
+	let currentGuideKey = $guideList && $guideList[0] ? $guideList[0].key : undefined;
+	let startingStepKey = undefined;
 	let guideVisible = true;
+	let guideData = undefined;
 
-	function init(guideTitle) {
-		currentGuideIdx = $guideData.findIndex((h) => h.title === guideTitle);
-		startingStepKey = Object.keys($guideData[currentGuideIdx]).find(
-			(k) => k !== "title"
-		);
+	async function init(guideKey) {
+		currentGuideKey = guideKey;
+		console.log('currentGuideKey: '+currentGuideKey);
+		if (guideKey && $guideList.findIndex((guide) => guide.key === guideKey) >= 0) {
+			const res = await fetch(`https://5f86tjn30m.execute-api.us-east-1.amazonaws.com/stage/get-guide/${guideKey}`);
+			const resData = await res.json();
+			if (res.ok) {
+				guideData = resData;
+				console.log('get-guide: '+JSON.stringify(guideData, null, 2));
+				
+				startingStepKey = Object.keys(guideData).find(
+					(k) => k !== "title"
+				);
+				console.log('startingStepKey: '+startingStepKey);
+			} else {
+				throw new Error(resData);
+			}
+		}
 	}
 
-	const useGuide = (guideTitle) => {
+	const useGuide = (guideKey) => {
 		guideVisible = false;
 		setTimeout(
 			() => {
-				init(guideTitle);
+				init(guideKey);
 				guideVisible = true;
 			}, // FIXME a delay >=500ms is required here otherwise the guide never actually changes
 			500
@@ -57,12 +71,7 @@
 	};
 
 	onMount(async () => {
-		if ($guideData && currentGuideIdx && $guideData[currentGuideIdx]) {
-			console.log("$guideData="+$guideData);
-			console.log("currentGuideIdx="+currentGuideIdx);
-			console.log("$guideData[currentGuideIdx]="+$guideData[currentGuideIdx]);
-			init($guideData[currentGuideIdx].title);
-		}
+		init(currentGuideKey);
 	});
 
 </script>
@@ -82,35 +91,38 @@
 						on:click={() => menu.setOpen(true)}>menu</IconButton
 					>
 					<Menu bind:this={menu}>
-						<List>
-							{#if $guideData}
-								{#each $guideData as guideInList, i}
+						{#if $guideList}
+							<List>
+								{#each $guideList as guideListEntry, i}
 									<Item
 										on:SMUI:action={() =>
-											useGuide(guideInList.title)}
+											useGuide(guideListEntry.key)}
 									>
-										<Text>{guideInList.title}</Text>
+										<Text>{guideListEntry.title}</Text>
 									</Item>
-								{/each}
-							{/if}
-						</List>
+								{/each}							
+							</List>
+						{:else}
+							<div>Loading...</div>
+						{/if}
 					</Menu>
 
 					<Title
-						>{title} <span style="font-size:80%">v{version}</span>: {$guideData ? $guideData[currentGuideIdx].title : "Loading..."}</Title
+						>{title} <span style="font-size:80%">v{version}</span>: {guideData ? guideData.title : "Select guide..."}</Title
 					>
 				</Section>
 				<Section align="end" toolbar>
-					<IconButton class="material-icons" aria-label="Download"
-						>file_download</IconButton
+					<IconButton 
+						href="https://s3.console.aws.amazon.com/s3/buckets/guide-me-guides-dev?region=us-east-1&tab=objects"
+						target="_blank"
+						class="material-icons" aria-label="Upload"
+						>cloud_upload</IconButton
 					>
 					<IconButton
+						href="https://github.com/rlyders/guide-me"
+						target="_blank"
 						class="material-icons"
-						aria-label="Print this page">print</IconButton
-					>
-					<IconButton
-						class="material-icons"
-						aria-label="Bookmark this page">bookmark</IconButton
+						aria-label="Source Code">code</IconButton
 					>
 				</Section>
 			</Row>
@@ -129,10 +141,10 @@
 					<Label slot="label">Loading...</Label>
 				</Banner>
 			{/if}
-			{#if $guideData && guideVisible}
+			{#if guideData && guideVisible}
 				<div in:fly={{ y: 200, duration: 750 }} out:fade>
 					<Guide
-						guideData={$guideData[currentGuideIdx]}
+						{guideData}
 						{startingStepKey}
 					/>
 				</div>

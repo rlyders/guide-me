@@ -26,10 +26,18 @@
     export let guideData;
     export let startingStepKey;
 
-    let startingUserChoice = new UserChoice({path: `/${startingStepKey}`, stepKey: startingStepKey});
-    let currentUserChoiceIdx = 0;
-    let userChoices: UserChoice[] = [startingUserChoice];
+    let startingUserChoice;
+    let userChoices: UserChoice[];
     let currentUserChoice: UserChoice;
+
+    $: { 
+        startingUserChoice = new UserChoice({path: `/${startingStepKey}`, stepKey: startingStepKey}) 
+        userChoices = [startingUserChoice];
+        currentUserChoiceIdx = 0;
+    };
+    startingStepKey = startingStepKey;
+
+    let currentUserChoiceIdx = 0;
     let sendVia;
     let sendViaChoice;
     let currentGuideStep;
@@ -226,8 +234,9 @@
 <!-- <code>
     <div>currentUserChoiceIdx={currentUserChoiceIdx}</div>
     <div>userChoices[currentUserChoiceIdx]={JSON.stringify(userChoices[currentUserChoiceIdx], null, 2)}</div>
-    <div>userChoices[currentUserChoiceIdx].stepKey={JSON.stringify(userChoices[currentUserChoiceIdx].stepKey, null, 2)}</div>
-    <div>guideData[userChoices[currentUserChoiceIdx].stepKey]={JSON.stringify(guideData[userChoices[currentUserChoiceIdx].stepKey], null, 2)}</div>
+    <div>userChoices[currentUserChoiceIdx].stepKey={ currentUserChoiceIdx && userChoices[currentUserChoiceIdx] ? JSON.stringify(userChoices[currentUserChoiceIdx].stepKey, null, 2) : ""}</div>
+    <div>guideData[userChoices[currentUserChoiceIdx].stepKey]={currentUserChoiceIdx && userChoices[currentUserChoiceIdx] && userChoices[currentUserChoiceIdx].stepKey ? JSON.stringify(guideData[userChoices[currentUserChoiceIdx].stepKey], null, 2) : ""}</div>
+    <div>startingStepKey={startingStepKey}</div>
     <div>startingUserChoice={JSON.stringify(startingUserChoice, null, 2)}</div>
     <div>userChoices={JSON.stringify(userChoices, null, 2)}</div>
     <div>currentUserChoice={JSON.stringify(currentUserChoice, null, 2)}</div>
@@ -235,6 +244,7 @@
     <div>currentUserChoice.stepKey={JSON.stringify(currentUserChoice ? currentUserChoice.stepKey : undefined, null, 2)}</div>
     <div>guideData[currentUserChoice.stepKey]={JSON.stringify(currentUserChoice && currentUserChoice.stepKey ? guideData[currentUserChoice.stepKey] : undefined, null, 2)}</div>
     <div>selected={selected}</div>
+    <div>guideData={JSON.stringify(guideData, null, 2)}</div>
 </code> -->
 
 <style>

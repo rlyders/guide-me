@@ -1,6 +1,6 @@
 {
   "name": "Guide-Me",
-  "version": "1.2.6",
+  "version": "1.2.11",
   "private": true,
   "scripts": {
     "build": "npm run version && rollup -c",
