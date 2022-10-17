@@ -35,9 +35,8 @@
 	let secondaryColor = false;
 
 	let currentGuideKey = $guideList && $guideList[0] ? $guideList[0].key : undefined;
-	let startingStepKey = undefined;
 	let guideVisible = true;
-	let guideData = undefined;
+	let stepData = undefined;
 
 	async function init(guideKey) {
 		currentGuideKey = guideKey;
@@ -46,13 +45,8 @@
 			const res = await fetch(`https://5f86tjn30m.execute-api.us-east-1.amazonaws.com/stage/get-guide/${guideKey}`);
 			const resData = await res.json();
 			if (res.ok) {
-				guideData = resData;
-				console.log('get-guide: '+JSON.stringify(guideData, null, 2));
-				
-				startingStepKey = Object.keys(guideData).find(
-					(k) => k !== "title"
-				);
-				console.log('startingStepKey: '+startingStepKey);
+				stepData = resData;
+				console.log('guide step: '+JSON.stringify(stepData, null, 2));
 			} else {
 				throw new Error(resData);
 			}
@@ -108,7 +102,7 @@
 					</Menu>
 
 					<Title
-						>{title} <span style="font-size:80%">v{version}</span>: {guideData ? guideData.title : "Select guide..."}</Title
+						>{title} <span style="font-size:80%">v{version}</span>: {stepData ? stepData.title : "Select guide..."}</Title
 					>
 				</Section>
 				<Section align="end" toolbar>
@@ -141,11 +135,10 @@
 					<Label slot="label">Loading...</Label>
 				</Banner>
 			{/if}
-			{#if guideData && guideVisible}
+			{#if stepData && guideVisible}
 				<div in:fly={{ y: 200, duration: 750 }} out:fade>
 					<Guide
-						{guideData}
-						{startingStepKey}
+						stepData={stepData}
 					/>
 				</div>
 			{/if}
